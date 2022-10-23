@@ -8,6 +8,7 @@ fetch(ENV_FILE)
   .then((env) => {
     ENV = env;
   });
+console.log(ENV);
 chrome.action.onClicked.addListener(() => {
   chrome.tabs.create({ url: "/index.html" });
 });
