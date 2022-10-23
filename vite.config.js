@@ -22,7 +22,16 @@ export default defineConfig((cfg) => {
       outDir: "dist",
     },
   };
-  const plugins = [vue(), CustomHmr(config)];
+  const plugins = [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => ["lottie-player"].includes(tag),
+        },
+      },
+    }),
+    CustomHmr(config),
+  ];
   config.plugins = plugins;
   return config;
 });

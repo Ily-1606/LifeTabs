@@ -3,7 +3,12 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,vue}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        wave: "url('/assets/svg/wave.svg')",
+        "wave-top": "url('/assets/svg/wavetop.svg')",
+      },
+    },
   },
   plugins: [],
 };
