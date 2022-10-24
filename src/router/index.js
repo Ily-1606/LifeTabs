@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+const HomeView = import("../views/HomeView.vue");
 import { onlyGuest } from "~/middleware/auth/onlyGuest";
 
 const handlerMiddlewares = (middlewares, next) => {
@@ -19,7 +19,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () => HomeView,
   },
   {
     path: "/about",

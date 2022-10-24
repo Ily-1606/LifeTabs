@@ -1,18 +1,21 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <div class="min-h-screen min-w-screen flex p-6 justify-between">
+      <div class="flex-none min-w-[300px]">
+        <EventNear />
+      </div>
+      <div class="flex-auto"></div>
+      <div class="flex-none"></div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "~/components/HelloWorld.vue";
-
+import EventNear from "~/components/Event/EventNear.vue";
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    EventNear,
   },
 };
 </script>
