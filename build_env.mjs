@@ -14,6 +14,7 @@ const build = (env_string) => {
       configs[key] = value;
     }
   });
+
   return configs;
 };
 const env_json = build(env_content);
