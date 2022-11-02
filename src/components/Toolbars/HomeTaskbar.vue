@@ -1,0 +1,50 @@
+<template>
+  <div
+    class="flex items-center justify-around px-8 py-6 rounded-xl bg-slate-100 gap-x-4"
+    v-auto-animate
+  >
+    <div
+      v-for="(shortcut, index) in shortcuts"
+      @click="setActive(shortcut.action)"
+      :key="index"
+      class="flex items-center justify-between gap-x-3 cursor-pointer transition-all px-4 py-2 duration-[200ms]"
+      :class="{
+        'bg-blue-500 rounded-xl': activated === shortcut.action,
+        'flex-row-reverse': index === shortcuts.length - 1,
+      }"
+    >
+      <VueFontAwesome
+        :icon="shortcut.icon"
+        class="w-6 h-6"
+        :class="{ 'fill-white': activated === shortcut.action }"
+      />
+      <div
+        class="w-0 text-ellipsis whitespace-nowrap overflow-hidden transition-all duration-[200ms]"
+        :class="{
+          '!w-14 text-white': activated === shortcut.action,
+        }"
+      >
+        {{ shortcut.name }}
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  computed: {
+    shortcuts() {
+      return this.$store.getters.get("baseShortcut", "shortcut") || [];
+    },
+  },
+  data() {
+    return {
+      activated: null,
+    };
+  },
+  methods: {
+    setActive(action) {
+      this.activated = action;
+    },
+  },
+};
+</script>

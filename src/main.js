@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 const app = createApp(App);
 /**
- * //TODO Using dynamic import to spliting code
+ * //TODO Using dynamic import to splitting code
  * Promise all to make sure all are libraries imported
  */
 const handlers = Promise.all([
@@ -10,14 +10,20 @@ const handlers = Promise.all([
   import("./router"),
   import("@formkit/auto-animate/vue"),
   import("./utils/fontawesome"),
-  import("./utils/sentry"),
+  import("./plugins/moment"),
+  import("./plugins/lodash"),
 ]);
-handlers.then(([store, router, animate, fontawesome, sentry]) => {
-  app.use(store.default).use(router.default).use(animate.autoAnimatePlugin);
+handlers.then(([store, router, animate, fontawesome, moment, lodash]) => {
+  app
+    .use(store.default)
+    .use(router.default)
+    .use(animate.autoAnimatePlugin)
+    .use(moment.default)
+    .use(lodash.default);
   fontawesome.setup(app);
-  sentry.SentryInit(app, router.default);
   app.mount("#app");
 });
+
 import "./utils/storage";
 import "~/assets/css/main.css";
 import("@lottiefiles/lottie-player");
