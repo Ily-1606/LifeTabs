@@ -12,5 +12,6 @@ module.exports = {
     "vue/setup-compiler-macros": true,
     webextensions: true,
     node: true,
+    jest: true,
   },
 };
