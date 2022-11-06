@@ -87,7 +87,7 @@ export default {
     },
   },
   created() {
-    // this.fetchShare();
+    this.fetchShare();
     this.getCurrentAstronomy();
   },
 };
