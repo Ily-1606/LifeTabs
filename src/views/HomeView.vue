@@ -55,6 +55,8 @@ import MailOverView from "~/components/Mail/OverView.vue";
 import SportOverView from "~/components/Sport/OverView.vue";
 import MediaOverView from "~/components/Media/OverView.vue";
 import HomeTaskbar from "~/components/Toolbars/HomeTaskbar.vue";
+import geoLocation from "~/utils/geolocation";
+
 export default {
   name: "HomeView",
   components: {
@@ -80,10 +82,22 @@ export default {
     async getCurrentAstronomy() {
       this.$store.dispatch("weather/getAstronomy");
     },
+    reloadLocation() {
+      geoLocation.query().then((coords) => {
+        if (coords) {
+          this.$store.commit("set", {
+            key: "userLocation",
+            value: coords,
+            setStorage: true,
+          });
+        }
+      });
+    },
   },
   created() {
     this.fetchShare();
     this.getCurrentAstronomy();
+    this.reloadLocation();
   },
 };
 </script>
