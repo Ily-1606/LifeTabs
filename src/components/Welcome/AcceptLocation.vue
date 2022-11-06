@@ -15,14 +15,24 @@
         Chúng tôi cần sử dụng dịch vụ vị trí của bạn để dự báo thời tiết cho bạn
         theo thời gian thực.
       </div>
+      <div class="text-center text-red-500">
+        {{ messageBlockLocation }}
+      </div>
       <div class="flex justify-center items-center mt-4">
-        <button class="btn-green" @click="$emit('next')">{{ btnText }}</button>
+        <button
+          class="btn-green disabled:bg-green-400"
+          @click="$emit('next')"
+          :disabled="isDisabled"
+        >
+          {{ btnText }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import WeatherLottie from "~/assets/lottie/lf20_3PNLts.json?url";
+import geoLocation from "~/utils/geolocation";
 export default {
   props: {
     btnText: {
@@ -33,7 +43,44 @@ export default {
   data() {
     return {
       WeatherLottie,
+      isDisabled: true,
+      messageBlockLocation: "",
     };
+  },
+  methods: {
+    getUserLocation() {
+      geoLocation.query().then((coords) => {
+        if (coords) {
+          this.isDisabled = false;
+          this.$store.commit("set", {
+            key: "userLocation",
+            value: coords,
+            setStorage: true,
+          });
+          return;
+        }
+        this.isDisabled = true;
+        this.messageBlockLocation =
+          "Vui lòng cho phép dịch vụ vị trí để sử dụng.";
+      });
+    },
+    requestLocationPermission() {
+      geoLocation.setup().then((res) => {
+        if (res.state === "granted") {
+          this.isDisabled = false;
+          this.getUserLocation();
+        } else if (res.state === "prompt") {
+          this.getUserLocation();
+        } else {
+          this.isDisabled = true;
+          this.messageBlockLocation =
+            "Vui lòng cho phép dịch vụ vị trí để sử dụng.";
+        }
+      });
+    },
+  },
+  created() {
+    this.requestLocationPermission();
   },
 };
 </script>
