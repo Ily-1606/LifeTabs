@@ -14,6 +14,7 @@ export default createStore({
       },
     ],
     timeOutAstronomy: 1000 * 60 * 15,
+    timeOutFetchShare: 1000 * 60 * 15,
   },
   getters: {
     get: (state) => (key, module) => {
@@ -89,11 +90,20 @@ export default createStore({
       });
       return res.data;
     },
-    async fetchShare(context, { params } = {}) {
-      const res = await axiosApi.get("/share/today", {
-        params,
+    async fetchShare({ state }, { params } = {}) {
+      const TIME_OUT = state.timeOutFetchShare;
+      const callback = async () => {
+        const res = await axiosApi.get("/share/today", {
+          params,
+        });
+        const { data } = res.data;
+        return data;
+      };
+      return await this.dispatch("getFromStorage", {
+        key: "listShares",
+        timeOut: TIME_OUT,
+        callback,
       });
-      return res.data;
     },
     async getFromStorage(context, { key, module, timeOut, callback }) {
       const data = await context.getters.getStorage(key);

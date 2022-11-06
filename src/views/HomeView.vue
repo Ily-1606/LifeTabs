@@ -75,12 +75,7 @@ export default {
   },
   methods: {
     async fetchShare() {
-      const res = await this.$store.dispatch("fetchShare");
-      if (res.success) {
-        this.$store.commit("set", { key: "listShares", value: res.data });
-      } else {
-        // Handler error here
-      }
+      this.$store.dispatch("fetchShare");
     },
     async getCurrentAstronomy() {
       this.$store.dispatch("weather/getAstronomy");
