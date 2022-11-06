@@ -14,4 +14,7 @@ module.exports = {
     node: true,
     jest: true,
   },
+  rules: {
+    "no-empty": ["error", { allowEmptyCatch: true }],
+  },
 };

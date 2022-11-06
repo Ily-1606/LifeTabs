@@ -35,16 +35,19 @@ export default {
         }).then((res) => {
           const token = res.data.token;
           if (token) {
-            this.$store.commit("setToken", {
-              userToken: token,
+            this.$store.commit("set", {
+              key: "userToken",
+              value: token,
+              setStorage: true,
             });
-            this.$router.push({
-              name: "home",
-            });
+            setTimeout(() => {
+              this.$router.push({
+                name: "home",
+              });
+            }, 5000);
           }
         });
       }
-      console.log(res);
     },
     async initData() {
       await this.createUser();

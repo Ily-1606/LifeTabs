@@ -6,7 +6,11 @@ const axiosApi = axios.create({
 });
 
 axiosApi.interceptors.request.use((config) => {
-  let token = localStorage.getItem("userToken");
+  let token = "";
+  try {
+    const jsonToken = JSON.parse(localStorage.getItem("userToken"));
+    token = jsonToken.value;
+  } catch (e) {}
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
