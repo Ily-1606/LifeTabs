@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 const HomeView = import("../views/HomeView.vue");
-import { onlyGuest } from "~/middleware/auth/onlyGuest";
+import { onlyGuest, onlyUser } from "~/middleware/auth/checkUser";
 
 const handlerMiddlewares = (middlewares, next) => {
   let result = true;
@@ -20,6 +20,14 @@ const routes = [
     path: "/",
     name: "home",
     component: () => HomeView,
+    beforeEnter: function (to, from, next) {
+      const middlewares = [
+        onlyUser.bind(null, () => {
+          return next({ name: "welcome" });
+        }),
+      ];
+      handlerMiddlewares(middlewares, next);
+    },
   },
   {
     path: "/about",
