@@ -4,16 +4,25 @@ const hasToken = () => {
 };
 const onlyGuest = (callback) => {
   if (hasToken()) {
-    callback();
+    if (callback) callback();
     return false;
   }
   return true;
 };
+const onlyUser = (callback) => {
+  if (!hasToken()) {
+    if (callback) callback();
+    return false;
+  }
+  return true;
+};
+
 const methods = {
   hasToken: hasToken.bind(this),
   onlyGuest: onlyGuest.bind(this),
+  onlyUser: onlyUser.bind(this),
 };
 export default {
   methods,
 };
-export { onlyGuest };
+export { onlyGuest, onlyUser };

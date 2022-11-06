@@ -2,6 +2,7 @@
   "name": "life-tab",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://lifetabs.ily1606.dev/",
   "scripts": {
     "dev": "vite --port 3001",
     "build": "vite build",
