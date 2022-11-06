@@ -40,9 +40,6 @@ export default createStore({
     },
   },
   mutations: {
-    setToken({ commit }, payload) {
-      commit("setStorage", { userToken: payload.userToken });
-    },
     set(state, { key, value, module = null, setStorage = false }) {
       if (module) state[module][key] = value;
       else state[key] = value;
