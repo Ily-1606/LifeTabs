@@ -82,6 +82,9 @@ export default {
     async getCurrentAstronomy() {
       this.$store.dispatch("weather/getAstronomy");
     },
+    async getCurrentWeather() {
+      this.$store.dispatch("weather/getCurrentWeather");
+    },
     reloadLocation() {
       geoLocation.query().then((coords) => {
         if (coords) {
@@ -97,6 +100,7 @@ export default {
   created() {
     this.fetchShare();
     this.getCurrentAstronomy();
+    this.getCurrentWeather();
     this.reloadLocation();
   },
 };

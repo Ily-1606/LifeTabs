@@ -1,6 +1,9 @@
 import { Config, VueFontAwesome } from "@ily1606/vue-font-awesome-pro";
 import { faCircleExclamation } from "@ily1606/pro-regular-svg-fontawesome";
-import { faCaretLeft } from "@ily1606/pro-solid-svg-fontawesome";
+import {
+  faCaretLeft,
+  faSpinnerThird,
+} from "@ily1606/pro-solid-svg-fontawesome";
 import {
   faClouds,
   faLeaf,
@@ -24,6 +27,7 @@ const icons = {
   faKeyboard,
   faGear,
   faCalendar,
+  faSpinnerThird,
 };
 const setup = (app) => {
   app.use(Config, icons);

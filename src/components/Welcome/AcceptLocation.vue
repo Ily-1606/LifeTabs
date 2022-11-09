@@ -15,15 +15,20 @@
         Chúng tôi cần sử dụng dịch vụ vị trí của bạn để dự báo thời tiết cho bạn
         theo thời gian thực.
       </div>
-      <div class="text-center text-red-500">
+      <div class="text-center text-red-500 font-bold my-3">
         {{ messageBlockLocation }}
       </div>
       <div class="flex justify-center items-center mt-4">
         <button
-          class="btn-green disabled:bg-green-400"
+          class="btn-green disabled:bg-green-300 flex items-center gap-x-2"
           @click="$emit('next')"
           :disabled="isDisabled"
         >
+          <VueFontAwesome
+            class="w-4 h-4 animate-spin fill-white"
+            icon="fa-solid fa-spinner-third"
+            v-if="isWaiting"
+          />
           {{ btnText }}
         </button>
       </div>
@@ -45,24 +50,31 @@ export default {
       WeatherLottie,
       isDisabled: true,
       messageBlockLocation: "",
+      isWaiting: false,
     };
   },
   methods: {
     getUserLocation() {
-      geoLocation.query().then((coords) => {
-        if (coords) {
-          this.isDisabled = false;
-          this.$store.commit("set", {
-            key: "userLocation",
-            value: coords,
-            setStorage: true,
-          });
-          return;
-        }
-        this.isDisabled = true;
-        this.messageBlockLocation =
-          "Vui lòng cho phép dịch vụ vị trí để sử dụng.";
-      });
+      this.isWaiting = true;
+      geoLocation
+        .query()
+        .then((coords) => {
+          if (coords) {
+            this.isDisabled = false;
+            this.$store.commit("set", {
+              key: "userLocation",
+              value: coords,
+              setStorage: true,
+            });
+            return;
+          }
+          this.isDisabled = true;
+          this.messageBlockLocation =
+            "Vui lòng cho phép dịch vụ vị trí để sử dụng.";
+        })
+        .finally(() => {
+          this.isWaiting = false;
+        });
     },
     requestLocationPermission() {
       geoLocation.setup().then((res) => {
