@@ -2,6 +2,7 @@ import axiosApi from "../utils/axios";
 import { createStore } from "vuex";
 import weatherStore from "./weather";
 import shortCutStore from "./shortcut";
+import unitStore from "./unit";
 
 export default createStore({
   state: {
@@ -15,6 +16,7 @@ export default createStore({
     ],
     timeOutAstronomy: 1000 * 60 * 15,
     timeOutFetchShare: 1000 * 60 * 15,
+    timeOutFetchCurrentWeather: 1000 * 60 * 15,
   },
   getters: {
     get: (state) => (key, module) => {
@@ -134,5 +136,6 @@ export default createStore({
   modules: {
     weather: weatherStore,
     shortcut: shortCutStore,
+    unit: unitStore,
   },
 });

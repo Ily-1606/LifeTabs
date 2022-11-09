@@ -81,7 +81,10 @@ export default {
   methods: {
     betWeenTimeData(timeStart, timeEnd) {
       const timeStartInt = this.convertAM2Date(timeStart).valueOf();
-      const timeEndInt = this.convertAM2Date(timeEnd).valueOf();
+      let timeEndInt = this.convertAM2Date(timeEnd).valueOf();
+      if (timeEndInt < timeStartInt) {
+        timeEndInt += 1000 * 60 * 60 * 24;
+      }
       const currentDate = new Date();
       const timeNowInt = currentDate.valueOf();
       return {
