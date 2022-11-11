@@ -9,22 +9,22 @@
       :key="index"
       class="flex items-center justify-between gap-x-3 cursor-pointer transition-all px-4 py-2 duration-[200ms]"
       :class="{
-        'bg-blue-500 rounded-xl': activated === shortcut.action,
+        'bg-blue-500 rounded-xl': routerActivating === shortcut.name,
         'flex-row-reverse': index === shortcuts.length - 1,
       }"
     >
       <VueFontAwesome
         :icon="shortcut.icon"
         class="w-6 h-6"
-        :class="{ 'fill-white': activated === shortcut.action }"
+        :class="{ 'fill-white': routerActivating === shortcut.name }"
       />
       <div
         class="w-0 text-ellipsis whitespace-nowrap overflow-hidden transition-all duration-[200ms]"
         :class="{
-          '!w-14 text-white': activated === shortcut.action,
+          '!w-14 text-white': routerActivating === shortcut.name,
         }"
       >
-        {{ shortcut.name }}
+        {{ shortcut.text }}
       </div>
     </div>
   </div>
@@ -37,18 +37,12 @@ export default {
     shortcuts() {
       return this.$store.getters.get("baseShortcut", "shortcut") || [];
     },
-  },
-  data() {
-    return {
-      activated: null,
-    };
+    routerActivating() {
+      return this.$route.meta.active;
+    },
   },
   methods: {
-    setActive(action) {
-      this.activated = action;
-    },
     setAction(action) {
-      this.setActive(action);
       this[action](); // Call methods from mixins
     },
   },
