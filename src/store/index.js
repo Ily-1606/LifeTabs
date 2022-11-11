@@ -115,22 +115,23 @@ export default createStore({
           markTime: data.updated_at,
           timeOut: TIME_OUT,
         });
-        if (!isTimeOut) {
-          context.commit("set", {
-            key,
-            value: data.value,
-            module,
+        if (isTimeOut) {
+          callback().then((callbackRes) => {
+            this.commit("set", {
+              key,
+              value: callbackRes,
+              module,
+              setStorage: true,
+            });
           });
-          return data.value;
         }
+        context.commit("set", {
+          key,
+          value: data.value,
+          module,
+        });
+        return data.value;
       }
-      const callbackRes = await callback();
-      this.commit("set", {
-        key,
-        value: callbackRes,
-        module,
-        setStorage: true,
-      });
     },
   },
   modules: {
