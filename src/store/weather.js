@@ -21,15 +21,17 @@ const weatherStore = {
         const currentDate = `${date.getFullYear()}-${
           date.getMonth() + 1
         }-${date.getDate()}`;
-        const res = await axiosWeatherAPI.get("/astronomy.json", {
+        const res = await axiosWeatherAPI.get("/weather/astronomy", {
           params: {
             q,
             dt: currentDate,
             ...params,
           },
         });
-        const astronomyFetch = res.data.astronomy;
-        return astronomyFetch;
+        const dataServer = res.data;
+        if (dataServer.success) {
+          return dataServer.data.astronomy;
+        }
       };
       return await this.dispatch("getFromStorage", {
         key: "astronomy",
