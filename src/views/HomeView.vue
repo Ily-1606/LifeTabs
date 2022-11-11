@@ -41,7 +41,6 @@
         <ItemObjectRise />
       </div>
     </div>
-    <HomeTaskbar class="fixed bottom-1 left-1/2 -translate-x-1/2" />
   </div>
 </template>
 
@@ -54,7 +53,6 @@ import ItemObjectRise from "~/components/Weather/ItemObjectRise.vue";
 import MailOverView from "~/components/Mail/OverView.vue";
 import SportOverView from "~/components/Sport/OverView.vue";
 import MediaOverView from "~/components/Media/OverView.vue";
-import HomeTaskbar from "~/components/Toolbars/HomeTaskbar.vue";
 import geoLocation from "~/utils/geolocation";
 
 export default {
@@ -68,7 +66,6 @@ export default {
     MailOverView,
     SportOverView,
     MediaOverView,
-    HomeTaskbar,
   },
   computed: {
     listShares() {
