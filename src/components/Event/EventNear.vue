@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-6 rounded-xl border border-blue-500 space-y-6">
+  <div class="u-panel">
     <div class="text-lg font-semibold text-center">
       {{ eventName }}
     </div>

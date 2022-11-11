@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 border border-blue-500 rounded-xl p-6 w-full text-sm">
+  <div class="u-panel text-sm">
     <div class="flex gap-x-5 items-center">
       <div class="flex-none w-14 space-y-2 text-center">
         <cloudsIcon class="mx-auto" />
