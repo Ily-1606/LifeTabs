@@ -108,6 +108,7 @@ export default createStore({
       });
     },
     async getFromStorage(context, { key, module, timeOut, callback }) {
+      let needReload = true;
       const data = await context.getters.getStorage(key);
       if (data) {
         const TIME_OUT = timeOut;
@@ -115,23 +116,24 @@ export default createStore({
           markTime: data.updated_at,
           timeOut: TIME_OUT,
         });
-        if (isTimeOut) {
-          callback().then((callbackRes) => {
-            this.commit("set", {
-              key,
-              value: callbackRes,
-              module,
-              setStorage: true,
-            });
-          });
-        }
+        if (!isTimeOut) needReload = false;
         context.commit("set", {
           key,
           value: data.value,
           module,
         });
-        return data.value;
       }
+      if (needReload) {
+        callback().then((callbackRes) => {
+          this.commit("set", {
+            key,
+            value: callbackRes,
+            module,
+            setStorage: true,
+          });
+        });
+      }
+      return data?.value;
     },
   },
   modules: {
