@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 const HomeView = import("../views/HomeView.vue");
+const WeatherView = import("../views/WeatherView.vue");
 import { onlyGuest, onlyUser } from "~/middleware/auth/checkUser";
 
 const handlerMiddlewares = (middlewares, next) => {
@@ -27,6 +28,25 @@ const routes = [
         }),
       ];
       handlerMiddlewares(middlewares, next);
+    },
+    meta: {
+      layout: "user",
+    },
+  },
+  {
+    path: "/weather",
+    name: "weather",
+    component: () => WeatherView,
+    beforeEnter: function (to, from, next) {
+      const middlewares = [
+        onlyUser.bind(null, () => {
+          return next({ name: "welcome" });
+        }),
+      ];
+      handlerMiddlewares(middlewares, next);
+    },
+    meta: {
+      layout: "user",
     },
   },
   {

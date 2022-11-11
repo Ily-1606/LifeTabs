@@ -5,7 +5,7 @@
   >
     <div
       v-for="(shortcut, index) in shortcuts"
-      @click="setActive(shortcut.action)"
+      @click="setAction(shortcut.action)"
       :key="index"
       class="flex items-center justify-between gap-x-3 cursor-pointer transition-all px-4 py-2 duration-[200ms]"
       :class="{
@@ -30,7 +30,9 @@
   </div>
 </template>
 <script>
+import shortcutMixin from "~/mixins/shortcut";
 export default {
+  mixins: [shortcutMixin],
   computed: {
     shortcuts() {
       return this.$store.getters.get("baseShortcut", "shortcut") || [];
@@ -44,6 +46,10 @@ export default {
   methods: {
     setActive(action) {
       this.activated = action;
+    },
+    setAction(action) {
+      this.setActive(action);
+      this[action](); // Call methods from mixins
     },
   },
 };
