@@ -11,27 +11,29 @@ const shortCutStore = {
        */
       baseShortcut: [
         {
-          name: "Trang chủ",
+          text: "Trang chủ",
           action: "toNewTab",
           icon: "fa-light fa-house-user",
+          name: "home",
         },
         {
-          name: "Thời tiết",
+          text: "Thời tiết",
           action: "toWeather",
           icon: "fa-light fa-cloud-sun-rain",
+          name: "weather",
         },
         {
-          name: "Sự kiện",
+          text: "Sự kiện",
           action: "toEvent",
           icon: "fa-light fa-calendar",
         },
         {
-          name: "Phím tắt",
+          text: "Phím tắt",
           action: "toShortcut",
           icon: "fa-light fa-keyboard",
         },
         {
-          name: "Cài đặt",
+          text: "Cài đặt",
           action: "toSetting",
           icon: "fa-light fa-gear",
         },

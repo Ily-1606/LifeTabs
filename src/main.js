@@ -1,10 +1,18 @@
 import { createApp } from "vue";
+import { directives } from "./utils/directive";
 import App from "./App.vue";
 const app = createApp(App);
 /**
  * //TODO Using dynamic import to splitting code
  * Promise all to make sure all are libraries imported
  */
+
+/**
+ * Set directive to global app
+ */
+directives.forEach(({ name, handler }) => {
+  app.directive(name, handler);
+});
 const handlers = Promise.all([
   import("./store"),
   import("./router"),

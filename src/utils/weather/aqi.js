@@ -277,4 +277,10 @@ const calcAQI = ({ key, value }) => {
   return result;
 };
 
-export { dictionaryAQI, calcAQI, listTitleAlerts };
+const getRangeAIQ = (value = 0) => {
+  return listTitleAlerts.findIndex(({ point_range }) => {
+    return point_range.from <= value && value <= point_range.to;
+  });
+};
+
+export { dictionaryAQI, calcAQI, listTitleAlerts, getRangeAIQ };

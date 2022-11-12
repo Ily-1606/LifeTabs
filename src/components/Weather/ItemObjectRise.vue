@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-6 border border-blue-500 rounded-xl" :style="themeColor">
+    <div class="u-panel" :style="themeColor">
       <ObjectRiseChartLine :percent="percent">
         <template v-if="isSun" #objectIcon="{ objectOffsetX, objectOffsetY }">
           <VueFontAwesome

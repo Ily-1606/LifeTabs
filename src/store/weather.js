@@ -74,6 +74,35 @@ const weatherStore = {
         callback,
       });
     },
+    async getForecast({ rootState }, { params } = {}) {
+      const TIME_OUT = rootState.timeOutFetchForecastWeather;
+      const locations = await this.getters.getStorage("userLocation");
+      let q = "";
+      if (locations?.value) {
+        const coords = locations.value;
+        q = [coords.latitude, coords.longitude].toString();
+      }
+      const callback = async () => {
+        const days = "1";
+        const res = await axiosWeatherAPI.get("/weather/forecast", {
+          params: {
+            q,
+            days,
+            ...params,
+          },
+        });
+        const dataServer = res.data;
+        if (dataServer.success) {
+          return dataServer.data;
+        }
+      };
+      return await this.dispatch("getFromStorage", {
+        key: "forecastData",
+        module: "weather",
+        timeOut: TIME_OUT,
+        callback,
+      });
+    },
   },
 };
 export default weatherStore;

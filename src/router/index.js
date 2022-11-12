@@ -31,6 +31,7 @@ const routes = [
     },
     meta: {
       layout: "user",
+      active: "home",
     },
   },
   {
@@ -47,6 +48,7 @@ const routes = [
     },
     meta: {
       layout: "user",
+      active: "weather",
     },
   },
   {

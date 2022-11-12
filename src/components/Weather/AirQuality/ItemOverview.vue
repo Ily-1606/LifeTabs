@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="flex gap-x-5 items-center">
     <div class="flex-none w-14 space-y-2 text-center">
       <VueFontAwesome
         icon="fa-light fa-leaf"
         class="w-6 h-6 fill-green-500 mx-auto"
       />
+      <div class="text-lg text-blue-500">{{ condition }} AQI</div>
     </div>
     <div class="flex-auto space-y-1">
-      <div class="text-lg text-blue-500">{{ condition }} AQI</div>
-      <div>{{ textAlert }}</div>
+      <div class="text-sm">{{ textAlert }}</div>
     </div>
   </div>
 </template>
