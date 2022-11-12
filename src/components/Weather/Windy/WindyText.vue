@@ -2,11 +2,11 @@
   <div>
     <template v-if="isKmh"
       ><span>{{ wind.wind_kph }}</span
-      ><span>km/h</span>
+      ><span> km/h</span>
     </template>
     <template v-else
       ><span>{{ wind.wind_mph }}</span
-      ><span>mph</span>
+      ><span> mph</span>
     </template>
   </div>
 </template>

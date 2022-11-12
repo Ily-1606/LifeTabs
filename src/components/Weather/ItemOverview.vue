@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="flex-auto space-y-1">
-        <TempText :temp="currentTemp" />
+        <TempText :temp="currentTemp" class="text-lg" />
         <div class="text-ellipsis overflow-hidden whitespace-nowrap">
           {{ currentWeather?.condition.text }}
         </div>

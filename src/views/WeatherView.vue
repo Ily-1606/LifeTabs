@@ -17,6 +17,8 @@
       <div class="flex-auto max-w-[600px]"></div>
       <div class="flex-none w-[350px] space-y-6">
         <ItemObjectRise />
+        <DetailPanel />
+        <DetailPanelMore />
       </div>
     </div>
   </div>
@@ -27,17 +29,16 @@ import ItemObjectRise from "~/components/Weather/ItemObjectRise.vue";
 import geoLocation from "~/utils/geolocation";
 import AirInformation from "~/components/Weather/AirQuality/AirInformation.vue";
 import ForecastOverView from "~/components/Weather/Forecast/ItemOverView.vue";
+import DetailPanel from "~/components/Weather/DetailPanel/DetailPanel.vue";
+import DetailPanelMore from "~/components/Weather/DetailPanel/DetailPanelMore.vue";
 export default {
   name: "WeatherView",
   components: {
     AirInformation,
     ItemObjectRise,
     ForecastOverView,
-  },
-  computed: {
-    listShares() {
-      return this.$store.getters.get("listShares");
-    },
+    DetailPanel,
+    DetailPanelMore,
   },
   methods: {
     async fetchShare() {
