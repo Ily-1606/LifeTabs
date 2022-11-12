@@ -21,8 +21,8 @@ export default createStore({
   },
   getters: {
     get: (state) => (key, module) => {
-      if (module) return state[module][key];
-      return state[key];
+      if (module) return state[module][key]?.value ?? state[module][key];
+      return state[key]?.value ?? state[key];
     },
     getStorage: () => (key) => {
       if (chrome?.storage) {
@@ -41,6 +41,10 @@ export default createStore({
           }
         });
       }
+    },
+    getTimeCached: (state) => (key, module) => {
+      if (module) return state[module][key]?.updated_at;
+      return state[key]?.updated_at;
     },
   },
   mutations: {
@@ -69,6 +73,17 @@ export default createStore({
         );
       }
     },
+    setStorageVsStore(state, { key, value, module = null }) {
+      this.commit("set", {
+        key,
+        value: {
+          updated_at: new Date().getTime(),
+          value,
+        },
+        module,
+      });
+      this.commit("setStorage", { key, value });
+    },
   },
   actions: {
     isTimeOutChecker(
@@ -93,13 +108,17 @@ export default createStore({
       });
       return res.data;
     },
-    async fetchShare({ state }, { params } = {}) {
+    async fetchShare({ state, commit }, { params } = {}) {
       const TIME_OUT = state.timeOutFetchShare;
       const callback = async () => {
         const res = await axiosApi.get("/share/today", {
           params,
         });
         const { data } = res.data;
+        commit("setStorageVsStore", {
+          key: "listShares",
+          value: data,
+        });
         return data;
       };
       return await this.dispatch("getFromStorage", {
@@ -120,19 +139,12 @@ export default createStore({
         if (!isTimeOut) needReload = false;
         context.commit("set", {
           key,
-          value: data.value,
+          value: data,
           module,
         });
       }
       if (needReload) {
-        callback().then((callbackRes) => {
-          this.commit("set", {
-            key,
-            value: callbackRes,
-            module,
-            setStorage: true,
-          });
-        });
+        callback();
       }
       return data?.value;
     },

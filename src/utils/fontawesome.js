@@ -33,6 +33,7 @@ import {
   faCloudShowers,
   faCloudMoonRain,
   faCloudSleet,
+  faRotateRight,
 } from "@ily1606/pro-light-svg-fontawesome";
 const icons = {
   faCircleExclamation,
@@ -66,6 +67,7 @@ const icons = {
   faCloudMoonRain,
   faCloudSleet,
   faCloudHail,
+  faRotateRight,
 };
 const setup = (app) => {
   app.use(Config, icons);

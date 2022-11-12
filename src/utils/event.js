@@ -11,7 +11,12 @@ const estemateSeconds = (estemateTime) => {
   return Math.floor(((estemateTime / 1000) % 60) % 60);
 };
 
-const countDown = (time_start, time_end) => {
+const minuteAgo = (time_start, time_end) => {
+  const estemateTime = time_end - time_start;
+  return Math.floor(estemateTime / 1000 / 60);
+};
+
+const timeAgo = (time_start, time_end) => {
   const estemateTime = Math.max(time_end - time_start, 0);
   const days = estemateDays(estemateTime);
   const hours = estemateHours(estemateTime);
@@ -33,6 +38,10 @@ const countDown = (time_start, time_end) => {
       sec < 10 ? "0" + sec : sec
     } giây`;
   }
+  return str;
+};
+const countDown = (time_start, time_end) => {
+  let str = timeAgo(time_start, time_end);
   str += " nữa";
   return str;
 };
@@ -42,4 +51,6 @@ export {
   estemateMinutes,
   estemateSeconds,
   countDown,
+  timeAgo,
+  minuteAgo,
 };
