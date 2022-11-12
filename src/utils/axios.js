@@ -20,13 +20,17 @@ axiosApi.interceptors.response.use(
     return response;
   },
   function (error) {
-    const { response } = error;
-    const { status } = response;
-    /**
-     * //TODO Redirect to welcome page if server return status 401
-     */
-    if (status === 401) {
-      router.push({ name: "welcome" });
+    try {
+      const { response } = error;
+      const { status } = response;
+      /**
+       * //TODO Redirect to welcome page if server return status 401
+       */
+      if (status === 401) {
+        router.push({ name: "welcome" });
+      }
+    } catch (e) {
+      // Some thing went wrong
     }
     return Promise.reject(error);
   }

@@ -2,7 +2,12 @@
   <div class="u-panel text-sm">
     <div class="flex gap-x-5 items-center">
       <div class="flex-none w-14 space-y-2 text-center">
-        <cloudsIcon class="mx-auto" />
+        <WeatherIcon
+          v-if="currentWeather"
+          :code="currentWeather.condition.code"
+          :is-day="currentWeather.is_day ? true : false"
+          class="mx-auto"
+        />
         <div class="text-ellipsis overflow-hidden whitespace-nowrap">
           {{ currentLocation?.name }}
         </div>
@@ -14,19 +19,16 @@
         </div>
       </div>
     </div>
-    <AirOverview
-      class="flex gap-x-5 items-center"
-      :air-data="currentAirQuality"
-    />
+    <AirOverview :air-data="currentAirQuality" />
   </div>
 </template>
 <script>
-import cloudsIcon from "./__Icons/__Clouds.vue";
 import TempText from "./Temp/TempText.vue";
 import AirOverview from "./AirQuality/ItemOverview.vue";
+import WeatherIcon from "./__Icons/WeatherIcon.vue";
 export default {
   components: {
-    cloudsIcon,
+    WeatherIcon,
     TempText,
     AirOverview,
   },
