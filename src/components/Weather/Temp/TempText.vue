@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-lg">
+    <div>
       <template v-if="isTempC"
         ><span>{{ temp.temp_c }}</span
         ><span>°C</span>
