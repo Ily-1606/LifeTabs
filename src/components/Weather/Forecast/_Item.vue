@@ -18,12 +18,25 @@
     </div>
     <div class="text-center space-y-2 text-sm">
       <WindyText :wind="wind" />
-      <div class="flex gap-x-1 items-center">
-        <VueFontAwesome icon="fa-light fa-location-arrow" class="w-4 h-4" />
-        <div class="text-xs whitespace-nowrap text-ellipsis overflow-hidden">
-          Đông Bắc
-        </div>
-      </div>
+      <WindyDirection
+        class="flex gap-x-1 items-center"
+        :wind_dir="forecastData.wind_dir"
+      >
+        <template #icon="{ classes }">
+          <VueFontAwesome
+            icon="fa-light fa-location-arrow"
+            class="w-4 h-4"
+            :class="classes"
+          />
+        </template>
+        <template #text="{ text }">
+          <div
+            class="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-center"
+          >
+            {{ text }}
+          </div>
+        </template>
+      </WindyDirection>
     </div>
     <div>
       {{ time }}
@@ -34,11 +47,13 @@
 import TempText from "../Temp/TempText.vue";
 import WindyText from "../Windy/WindyText.vue";
 import WeatherIcon from "../__Icons/WeatherIcon.vue";
+import WindyDirection from "../Windy/WindyDirection.vue";
 export default {
   components: {
     TempText,
     WindyText,
     WeatherIcon,
+    WindyDirection,
   },
   props: {
     forecastData: {
