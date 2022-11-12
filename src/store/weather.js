@@ -8,99 +8,108 @@ const weatherStore = {
     };
   },
   actions: {
-    async getAstronomy({ rootState }, params = {}) {
-      const TIME_OUT = rootState.timeOutAstronomy;
+    async getLocation() {
       const locations = await this.getters.getStorage("userLocation");
       let q = "";
       if (locations?.value) {
         const coords = locations.value;
         q = [coords.latitude, coords.longitude].toString();
       }
-      const callback = async () => {
-        const date = new Date();
-        const currentDate = `${date.getFullYear()}-${
-          date.getMonth() + 1
-        }-${date.getDate()}`;
-        const res = await axiosWeatherAPI.get("/weather/astronomy", {
-          params: {
-            q,
-            dt: currentDate,
-            ...params,
-          },
+      return q;
+    },
+    async getAstronomy(context, params = {}) {
+      const date = new Date();
+      const currentDate = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`;
+      const q = await context.dispatch("getLocation");
+      const res = await axiosWeatherAPI.get("/weather/astronomy", {
+        params: {
+          q,
+          dt: currentDate,
+          ...params,
+        },
+      });
+      const dataServer = res.data;
+      if (dataServer.success) {
+        this.commit("setStorageVsStore", {
+          key: "astronomy",
+          value: dataServer.data.astronomy,
+          module: "weather",
         });
-        const dataServer = res.data;
-        if (dataServer.success) {
-          return dataServer.data.astronomy;
-        }
-      };
+        return dataServer.data.astronomy;
+      }
+    },
+    async getCurrentWeather(context, params = {}) {
+      const date = new Date();
+      const currentDate = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`;
+      const q = await context.dispatch("getLocation");
+      const res = await axiosWeatherAPI.get("/weather/current", {
+        params: {
+          q,
+          dt: currentDate,
+          aqi: "yes",
+          alerts: "yes",
+          ...params,
+        },
+      });
+      const dataServer = res.data;
+      if (dataServer.success) {
+        this.commit("setStorageVsStore", {
+          key: "currentWeather",
+          value: dataServer.data,
+          module: "weather",
+        });
+        return dataServer.data;
+      }
+    },
+    async getForecastWeather(context, params = {}) {
+      const days = "1";
+      const q = await context.dispatch("getLocation");
+      const res = await axiosWeatherAPI.get("/weather/forecast", {
+        params: {
+          q,
+          days,
+          ...params,
+        },
+      });
+      const dataServer = res.data;
+      if (dataServer.success) {
+        this.commit("setStorageVsStore", {
+          key: "forecastData",
+          value: dataServer.data,
+          module: "weather",
+        });
+        return dataServer.data;
+      }
+    },
+    async getAstronomyCache({ rootState, dispatch }, params = {}) {
+      const TIME_OUT = rootState.timeOutAstronomy;
       return await this.dispatch("getFromStorage", {
         key: "astronomy",
         module: "weather",
         timeOut: TIME_OUT,
-        callback,
+        callback: () => dispatch("getAstronomy", params),
       });
     },
-    async getCurrentWeather({ rootState }, { params } = {}) {
+    async getCurrentWeatherCache({ rootState, dispatch }, { params } = {}) {
       const TIME_OUT = rootState.timeOutFetchCurrentWeather;
-      const locations = await this.getters.getStorage("userLocation");
-      let q = "";
-      if (locations?.value) {
-        const coords = locations.value;
-        q = [coords.latitude, coords.longitude].toString();
-      }
-      const callback = async () => {
-        const date = new Date();
-        const currentDate = `${date.getFullYear()}-${
-          date.getMonth() + 1
-        }-${date.getDate()}`;
-        const res = await axiosWeatherAPI.get("/weather/current", {
-          params: {
-            q,
-            dt: currentDate,
-            aqi: "yes",
-            alerts: "yes",
-            ...params,
-          },
-        });
-        const dataServer = res.data;
-        if (dataServer.success) {
-          return dataServer.data;
-        }
-      };
       return await this.dispatch("getFromStorage", {
         key: "currentWeather",
         module: "weather",
         timeOut: TIME_OUT,
-        callback,
+        callback: () => dispatch("getCurrentWeather", params),
       });
     },
-    async getForecast({ rootState }, { params } = {}) {
+    async getForecastCache({ rootState, dispatch }, { params } = {}) {
       const TIME_OUT = rootState.timeOutFetchForecastWeather;
-      const locations = await this.getters.getStorage("userLocation");
-      let q = "";
-      if (locations?.value) {
-        const coords = locations.value;
-        q = [coords.latitude, coords.longitude].toString();
-      }
-      const callback = async () => {
-        const days = "1";
-        const res = await axiosWeatherAPI.get("/weather/forecast", {
-          params: {
-            q,
-            days,
-            ...params,
-          },
-        });
-        const dataServer = res.data;
-        if (dataServer.success) {
-          return dataServer.data;
-        }
-      };
       return await this.dispatch("getFromStorage", {
         key: "forecastData",
         module: "weather",
         timeOut: TIME_OUT,
-        callback,
+        callback: () => dispatch("getForecastWeather", params),
       });
     },
   },
