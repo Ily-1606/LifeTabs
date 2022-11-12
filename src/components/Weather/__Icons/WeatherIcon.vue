@@ -5,7 +5,7 @@
 import { readonly, computed } from "@vue/reactivity";
 const props = defineProps({
   code: {
-    type: String,
+    type: [String, Number],
     required: true,
   },
   isDay: {
