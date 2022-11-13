@@ -66,7 +66,7 @@ const weatherStore = {
       }
     },
     async getForecastWeather(context, params = {}) {
-      const days = "1";
+      const days = "5";
       const q = await context.dispatch("getLocation");
       const res = await axiosWeatherAPI.get("/weather/forecast", {
         params: {

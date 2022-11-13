@@ -1,5 +1,5 @@
 <template>
-  <VueFontAwesome :icon="icon" class="w-6 h-6" />
+  <VueFontAwesome :icon="icon" />
 </template>
 <script setup>
 import { readonly, computed } from "@vue/reactivity";

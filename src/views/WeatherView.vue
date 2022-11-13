@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="min-h-screen h-screen min-w-screen flex p-6 justify-between">
+    <div class="min-h-screen min-w-screen flex px-6 justify-between">
       <div
-        class="flex flex-col flex-none w-[350px] space-y-8 h-full overflow-hidden"
+        class="flex flex-col flex-none w-[350px] space-y-8 h-screen py-6 overflow-hidden sticky top-0"
       >
         <div class="flex-none">
           <AirInformation />
@@ -14,9 +14,9 @@
           </div>
         </div>
       </div>
-      <div class="flex-auto max-w-[600px]">
+      <div class="flex-auto max-w-[600px] space-y-10 py-6 pb-[100px]">
         <div class="text-center space-y-3">
-          <div class="text-xl">
+          <div class="text-2xl">
             {{ currentLocation.name }}
           </div>
           <div class="flex gap-x-3 items-center justify-center">
@@ -31,8 +31,22 @@
             </div>
           </div>
         </div>
+        <div class="text-center space-y-2">
+          <WeatherIcon
+            v-if="currentWeather?.condition"
+            class="w-20 h-20 m-auto"
+            :code="currentWeather.condition?.code"
+            :is-day="currentWeather.is_day ? true : false"
+          />
+          <div class="text-sm">{{ currentWeather?.condition?.text }}</div>
+          <TempText :temp="currentTemp" class="text-xl" />
+        </div>
+        <div class="space-y-2">
+          <div>Trong những ngày tới</div>
+          <GraphWeather />
+        </div>
       </div>
-      <div class="flex-none w-[350px] space-y-6">
+      <div class="flex-none w-[350px] space-y-6 py-6 sticky top-0 h-screen">
         <ItemObjectRise />
         <DetailPanel />
         <DetailPanelMore />
@@ -48,7 +62,10 @@ import AirInformation from "~/components/Weather/AirQuality/AirInformation.vue";
 import ForecastOverView from "~/components/Weather/Forecast/ItemOverView.vue";
 import DetailPanel from "~/components/Weather/DetailPanel/DetailPanel.vue";
 import DetailPanelMore from "~/components/Weather/DetailPanel/DetailPanelMore.vue";
+import WeatherIcon from "~/components/Weather/__Icons/WeatherIcon.vue";
 import { minuteAgo } from "~/utils/event";
+import TempText from "~/components/Weather/Temp/TempText.vue";
+import GraphWeather from "~/components/Weather/DetailPanel/GraphWeather.vue";
 export default {
   name: "WeatherView",
   components: {
@@ -57,6 +74,9 @@ export default {
     ForecastOverView,
     DetailPanel,
     DetailPanelMore,
+    WeatherIcon,
+    TempText,
+    GraphWeather,
   },
   data() {
     return {
@@ -70,6 +90,17 @@ export default {
       return (
         this.$store.getters.get("currentWeather", "weather")?.location ?? {}
       );
+    },
+    currentWeather() {
+      return (
+        this.$store.getters.get("currentWeather", "weather")?.current ?? {}
+      );
+    },
+    currentTemp() {
+      return {
+        temp_c: this.currentWeather.temp_c,
+        temp_f: this.currentWeather.temp_f,
+      };
     },
     lastLoad() {
       return this.$store.getters.getTimeCached("currentWeather", "weather");
