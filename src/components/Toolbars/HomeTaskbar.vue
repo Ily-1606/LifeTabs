@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-around px-8 py-6 rounded-xl bg-slate-100 gap-x-4"
+    class="flex items-center justify-around px-8 py-2 rounded-xl bg-slate-400/20 gap-x-4 backdrop-blur-md"
     v-auto-animate
   >
     <div
