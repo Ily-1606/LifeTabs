@@ -85,6 +85,15 @@ const weatherStore = {
         return dataServer.data;
       }
     },
+    async searchLocation(context, params = {}) {
+      const res = await axiosWeatherAPI.get("/weather/location-search", {
+        params,
+      });
+      const dataServer = res.data;
+      if (dataServer.success) {
+        return dataServer.data;
+      }
+    },
     async getAstronomyCache({ rootState, dispatch }, params = {}) {
       const TIME_OUT = rootState.timeOutAstronomy;
       return await this.dispatch("getFromStorage", {
