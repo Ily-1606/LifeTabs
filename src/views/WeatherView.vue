@@ -15,20 +15,37 @@
         </div>
       </div>
       <div class="flex-auto max-w-[600px] space-y-10 py-6 pb-[100px]">
-        <div class="text-center space-y-3">
-          <div class="text-2xl">
-            {{ currentLocation.name }}
-          </div>
-          <div class="flex gap-x-3 items-center justify-center">
+        <div class="flex justify-around items-center">
+          <div class="flex-none">
             <VueFontAwesome
-              icon="fa-light fa-rotate-right"
-              class="w-4 h-4 cursor-pointer"
-              :class="{ 'animate-spin pointer-events-none': isLoadingWeather }"
-              @click="reloadData"
+              icon="fa-light fa-plus"
+              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md"
+              @click="isOpenModalLocation = true"
             />
-            <div class="text-sm">
-              Cập nhật lần cuối {{ loadedAgo }} phút trước
+          </div>
+          <div class="flex-auto text-center space-y-3">
+            <div class="text-2xl">
+              {{ currentLocation.name }}
             </div>
+            <div class="flex gap-x-3 items-center justify-center">
+              <VueFontAwesome
+                icon="fa-light fa-rotate-right"
+                class="w-4 h-4 cursor-pointer"
+                :class="{
+                  'animate-spin pointer-events-none': isLoadingWeather,
+                }"
+                @click="reloadData"
+              />
+              <div class="text-sm">
+                Cập nhật lần cuối {{ loadedAgo }} phút trước
+              </div>
+            </div>
+          </div>
+          <div class="flex-none">
+            <VueFontAwesome
+              icon="fa-light fa-gear"
+              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md"
+            />
           </div>
         </div>
         <div class="text-center space-y-2">
@@ -52,6 +69,11 @@
         <DetailPanelMore />
       </div>
     </div>
+    <ModalLocation
+      v-if="isOpenModalLocation"
+      :is-open="true"
+      @close-modal="isOpenModalLocation = false"
+    />
   </div>
 </template>
 
@@ -66,6 +88,7 @@ import WeatherIcon from "~/components/Weather/__Icons/WeatherIcon.vue";
 import { minuteAgo } from "~/utils/event";
 import TempText from "~/components/Weather/Temp/TempText.vue";
 import GraphWeather from "~/components/Weather/DetailPanel/GraphWeather.vue";
+import ModalLocation from "~/components/Modal/ModalLocation.vue";
 export default {
   name: "WeatherView",
   components: {
@@ -77,12 +100,14 @@ export default {
     WeatherIcon,
     TempText,
     GraphWeather,
+    ModalLocation,
   },
   data() {
     return {
       loadedAgo: 1,
       timmerAgoId: null,
       isLoadingWeather: false,
+      isOpenModalLocation: false,
     };
   },
   computed: {

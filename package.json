@@ -17,6 +17,7 @@
     "@babel/core": "^7.19.6",
     "@babel/preset-env": "^7.19.4",
     "@formkit/auto-animate": "^1.0.0-beta.3",
+    "@headlessui/vue": "^1.7.4",
     "@ily1606/pro-light-svg-fontawesome": "^0.1.0",
     "@ily1606/pro-regular-svg-fontawesome": "^0.1.0",
     "@ily1606/pro-solid-svg-fontawesome": "^0.1.0",
