@@ -21,8 +21,16 @@ export default createStore({
   },
   getters: {
     get: (state) => (key, module) => {
-      if (module) return state[module][key]?.value ?? state[module][key];
-      return state[key]?.value ?? state[key];
+      if (module) {
+        if (state[module][key]?.value !== undefined) {
+          return state[module][key].value;
+        }
+        return state[module][key];
+      }
+      if (state[key]?.value !== undefined) {
+        return state[key].value;
+      }
+      return state[key];
     },
     getStorage: () => (key) => {
       if (chrome?.storage) {

@@ -5,9 +5,44 @@ const weatherStore = {
     return {
       astronomy: {},
       currentWeather: {},
+      listLocations: [],
+      locationActivating: null,
     };
   },
   actions: {
+    async addLocation(context, { payload, params }) {
+      const res = await axiosWeatherAPI.post("/user/location", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async updateLocation(context, { payload, params }) {
+      const res = await axiosWeatherAPI.patch("/user/location", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async fetchLocations(context, { params = {} } = {}) {
+      const res = await axiosWeatherAPI.get("/user/config", {
+        params,
+      });
+      const dataServer = res.data;
+      if (dataServer.data) {
+        this.commit("setStorageVsStore", {
+          key: "listLocations",
+          value: dataServer.data.location.locations,
+          module: "weather",
+        });
+        this.commit("setStorageVsStore", {
+          key: "locationActivating",
+          value: dataServer.data.location.current_setting,
+          module: "weather",
+        });
+      }
+      return dataServer;
+    },
     async getLocation() {
       const locations = await this.getters.getStorage("userLocation");
       let q = "";
