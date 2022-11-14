@@ -1,5 +1,5 @@
 <template>
-  <div class="u-panel flex items-center w-full py-4 gap-x-4">
+  <div class="u-panel flex items-center w-full py-4 gap-x-4 overflow-hidden">
     <div class="space-y-2 text-center">
       <WeatherIcon
         :code="iconData.code"
@@ -12,7 +12,10 @@
     </div>
     <div class="text-center flex-auto">
       <TempText :temp="temp" />
-      <div class="text-xs text-ellipsis overflow-hidden whitespace-nowrap">
+      <div
+        class="text-xs text-ellipsis overflow-hidden whitespace-nowrap w-20"
+        :title="forecastData.condition.text"
+      >
         {{ forecastData.condition.text }}
       </div>
     </div>
@@ -31,7 +34,8 @@
         </template>
         <template #text="{ text }">
           <div
-            class="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-center"
+            class="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-center w-10"
+            :title="text"
           >
             {{ text }}
           </div>
