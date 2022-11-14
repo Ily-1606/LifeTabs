@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center border border-blue-400 px-4 py-3 rounded-2xl justify-center w-20 box-content"
+    class="flex items-center border border-blue-400 px-4 py-3 rounded-2xl justify-center w-20 box-content cursor-pointer"
     v-if="isLoading"
   >
     <VueFontAwesome
@@ -9,14 +9,18 @@
     />
   </div>
   <div
-    class="flex items-center border border-green-400 px-4 py-3 rounded-2xl text-sm gap-x-3"
+    class="flex items-center border px-4 py-3 rounded-2xl text-sm gap-x-3 cursor-pointer"
+    @click="emits('selected', dataLocation.id)"
+    :class="
+      locationActivating === dataLocation.id ||
+      (!locationActivating && dataLocation.isGps)
+        ? 'border-green-400 fill-green-500'
+        : 'border-blue-500 fill-blue-500'
+    "
     v-else
   >
     <div class="flex-none">
-      <VueFontAwesome
-        icon="fa-light fa-location-check"
-        class="w-4 h-4 fill-green-500"
-      />
+      <VueFontAwesome icon="fa-light fa-location-check" class="w-4 h-4" />
     </div>
     <div class="flex-none">
       {{ dataLocation.name }}
@@ -24,18 +28,29 @@
   </div>
 </template>
 <script setup>
-import { ref } from "@vue/reactivity";
+import { reactive, ref, computed } from "@vue/reactivity";
+import { useStore } from "vuex";
 
+const store = useStore();
+const locationActivating = computed(() => {
+  return store.getters.get("locationActivating", "weather")?.location.id;
+});
 const props = defineProps({
   promiseData: {
-    type: Promise,
+    type: [Promise, Object],
     required: false,
   },
 });
+const emits = defineEmits(["selected"]);
 const dataLocation = ref({});
 const isLoading = ref(true);
-props.promiseData.then((res) => {
+if (props.promiseData.constructor === Promise) {
+  props.promiseData.then((res) => {
+    isLoading.value = false;
+    dataLocation.value = res.location;
+  });
+} else {
   isLoading.value = false;
-  dataLocation.value = res[0];
-});
+  dataLocation.value = reactive(props.promiseData.location);
+}
 </script>

@@ -29,11 +29,12 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap gap-4" v-auto-animate>
         <LocationSaved
           v-for="(locationSaved, index) in listSaved"
           :key="index"
           :promise-data="locationSaved"
+          @selected="changeLocation"
         />
       </div>
       <div class="flex flex-wrap gap-4 my-4">
@@ -43,7 +44,10 @@
             v-for="(locationData, index) in listSearch"
             :key="index"
           >
-            <LocationItem :location-data="locationData" />
+            <LocationItem
+              :location-data="locationData"
+              @selected="saveLocation"
+            />
           </div>
         </template>
         <template v-else>
@@ -89,8 +93,18 @@ export default {
       q: "",
       isLoading: false,
       listSearch: [],
-      listSaved: [],
+      currentLocation: [],
+      listAdded: [],
     };
+  },
+  computed: {
+    listSaved() {
+      const listLocations = this.$store.getters.get("listLocations", "weather");
+      if (listLocations) {
+        return [...this.currentLocation, ...listLocations, ...this.listAdded];
+      }
+      return [this.currentLocation];
+    },
   },
   methods: {
     async search() {
@@ -103,17 +117,59 @@ export default {
         this.isLoading = false;
       }
     },
-    async fetchSaved() {
-      const locationGps = await this.$store.dispatch("weather/getLocation");
-      this.listSaved = [
-        this.$store.dispatch("weather/searchLocation", {
-          q: locationGps,
-        }),
-      ];
+    fetchSaved() {
+      const handler = new Promise((solver) => {
+        this.$store.dispatch("weather/getLocation").then((locationGps) => {
+          this.$store
+            .dispatch("weather/searchLocation", {
+              q: locationGps,
+            })
+            .then((res) => {
+              res[0].isGps = true;
+              return res[0];
+            })
+            .then((res) => {
+              solver({
+                location: res,
+              });
+            });
+        });
+      });
+      this.currentLocation = [handler];
+    },
+    async saveLocation(data) {
+      const res = this.$store.dispatch("weather/addLocation", {
+        payload: {
+          location: data,
+        },
+      });
+      this.listAdded.push(res.then((res) => res.data));
+    },
+    async getLocation() {
+      await this.$store.dispatch("weather/fetchLocations");
+    },
+    async changeLocation(locationId) {
+      const location = this.listSaved.find((locationData) => {
+        if (locationData.id) {
+          return locationData.location.id === locationId;
+        }
+        return false;
+      });
+      await this.$store.dispatch("weather/updateLocation", {
+        params: {
+          id: location.id,
+        },
+        payload: {
+          isActivating: true,
+        },
+      });
+      this.listAdded = [];
+      this.getLocation();
     },
   },
   created() {
     this.fetchSaved();
+    this.getLocation();
   },
 };
 </script>

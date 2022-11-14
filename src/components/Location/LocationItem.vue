@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex gap-x-3 p-2 border rounded-md border-blue-400 items-center cursor-pointer"
-    @click="emits('selected')"
+    @click="emits('selected', locationData)"
   >
     <div class="space-y-2">
       <VueFontAwesome icon="fa-light fa-location-dot" class="w-4 h-4 mx-auto" />
