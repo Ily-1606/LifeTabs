@@ -132,14 +132,8 @@ export default {
     },
   },
   methods: {
-    async getCurrentAstronomy() {
-      this.$store.dispatch("weather/getAstronomyCache");
-    },
-    async getCurrentWeather() {
-      this.$store.dispatch("weather/getCurrentWeatherCache");
-    },
-    async getForecast() {
-      this.$store.dispatch("weather/getForecastCache");
+    async getData() {
+      this.$store.dispatch("weather/getCacheData");
     },
     reloadLocation() {
       geoLocation.query().then((coords) => {
@@ -159,21 +153,15 @@ export default {
     },
     reloadData() {
       this.isLoadingWeather = true;
-      const handlers = [
-        this.$store.dispatch("weather/getAstronomy"),
-        this.$store.dispatch("weather/getCurrentWeather"),
-        this.$store.dispatch("weather/getForecastWeather"),
-      ];
-      Promise.all(handlers).then(() => {
+      const handlers = this.$store.dispatch("weather/refreshData");
+      handlers.then(() => {
         // Handler all process done
         this.isLoadingWeather = false;
       });
     },
   },
   created() {
-    this.getCurrentAstronomy();
-    this.getCurrentWeather();
-    this.getForecast();
+    this.getData();
     this.reloadLocation();
     this.loadAgo();
     this.timmerAgoId = setInterval(() => {

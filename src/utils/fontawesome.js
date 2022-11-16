@@ -1,5 +1,8 @@
 import { Config, VueFontAwesome } from "@ily1606/vue-font-awesome-pro";
-import { faCircleExclamation } from "@ily1606/pro-regular-svg-fontawesome";
+import {
+  faCircleExclamation,
+  faXmark,
+} from "@ily1606/pro-regular-svg-fontawesome";
 import {
   faCaretLeft,
   faSpinnerThird,
@@ -76,6 +79,7 @@ const icons = {
   faMagnifyingGlass,
   faLocationDot,
   faLocationCheck,
+  faXmark,
 };
 const setup = (app) => {
   app.use(Config, icons);

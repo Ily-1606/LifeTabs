@@ -32,10 +32,18 @@
       <div class="flex flex-wrap gap-4" v-auto-animate>
         <LocationSaved
           v-for="(locationSaved, index) in listSaved"
-          :key="index"
+          :key="locationSaved?.id ?? index"
           :promise-data="locationSaved"
           @selected="changeLocation"
-        />
+        >
+          <template #icon-delete="{ data }">
+            <VueFontAwesome
+              icon="fa-regular fa-xmark"
+              class="w-4 h-4 fill-red-500"
+              @click.stop="deleteLocation(data)"
+            />
+          </template>
+        </LocationSaved>
       </div>
       <div class="flex flex-wrap gap-4 my-4">
         <template v-if="listSearch.length">
@@ -119,21 +127,23 @@ export default {
     },
     fetchSaved() {
       const handler = new Promise((solver) => {
-        this.$store.dispatch("weather/getLocation").then((locationGps) => {
-          this.$store
-            .dispatch("weather/searchLocation", {
-              q: locationGps,
-            })
-            .then((res) => {
-              res[0].isGps = true;
-              return res[0];
-            })
-            .then((res) => {
-              solver({
-                location: res,
+        this.$store
+          .dispatch("weather/getLocation", { mode: "gps" })
+          .then((locationGps) => {
+            this.$store
+              .dispatch("weather/searchLocation", {
+                q: locationGps,
+              })
+              .then((res) => {
+                res[0].isGps = true;
+                return res[0];
+              })
+              .then((res) => {
+                solver({
+                  location: res,
+                });
               });
-            });
-        });
+          });
       });
       this.currentLocation = [handler];
     },
@@ -145,17 +155,39 @@ export default {
       });
       this.listAdded.push(res.then((res) => res.data));
     },
-    async getLocation() {
-      await this.$store.dispatch("weather/fetchLocations");
-    },
-    async changeLocation(locationId) {
-      const location = this.listSaved.find((locationData) => {
-        if (locationData.id) {
+    async deleteLocation({ id: locationId }) {
+      const listSaved = await Promise.all(this.listSaved);
+      const location = listSaved.find((locationData) => {
+        if (locationData.location) {
           return locationData.location.id === locationId;
         }
         return false;
       });
-      await this.$store.dispatch("weather/updateLocation", {
+      await this.$store.dispatch("weather/deleteLocation", {
+        params: {
+          id: location.id,
+        },
+      });
+      await this.getLocation();
+      this.$store.dispatch("weather/refreshData");
+      this.listAdded = [];
+    },
+    async getLocation() {
+      await this.$store.dispatch("weather/fetchLocations");
+    },
+    async changeLocation(locationId) {
+      const listSaved = await Promise.all(this.listSaved);
+      const location = listSaved.find((locationData) => {
+        if (locationData.location) {
+          return locationData.location.id === locationId;
+        }
+        return false;
+      });
+      let action = "weather/updateLocation";
+      if (location.location.isGps) {
+        action = "weather/resetLocation";
+      }
+      await this.$store.dispatch(action, {
         params: {
           id: location.id,
         },
@@ -163,8 +195,9 @@ export default {
           isActivating: true,
         },
       });
+      await this.getLocation();
+      this.$store.dispatch("weather/refreshData");
       this.listAdded = [];
-      this.getLocation();
     },
   },
   created() {
