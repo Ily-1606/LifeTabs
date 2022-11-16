@@ -22,8 +22,11 @@
     <div class="flex-none">
       <VueFontAwesome icon="fa-light fa-location-check" class="w-4 h-4" />
     </div>
-    <div class="flex-none">
+    <div class="flex-auto">
       {{ dataLocation.name }}
+    </div>
+    <div class="flex-none" v-if="!dataLocation.isGps">
+      <slot name="icon-delete" :data="dataLocation"></slot>
     </div>
   </div>
 </template>

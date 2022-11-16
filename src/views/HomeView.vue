@@ -76,11 +76,8 @@ export default {
     async fetchShare() {
       this.$store.dispatch("fetchShare");
     },
-    async getCurrentAstronomy() {
-      this.$store.dispatch("weather/getAstronomyCache");
-    },
-    async getCurrentWeather() {
-      this.$store.dispatch("weather/getCurrentWeatherCache");
+    async getData() {
+      this.$store.dispatch("weather/getCacheData");
     },
     reloadLocation() {
       geoLocation.query().then((coords) => {
@@ -96,8 +93,7 @@ export default {
   },
   created() {
     this.fetchShare();
-    this.getCurrentAstronomy();
-    this.getCurrentWeather();
+    this.getData();
     this.reloadLocation();
   },
 };

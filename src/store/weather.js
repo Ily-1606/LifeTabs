@@ -7,6 +7,20 @@ const weatherStore = {
       currentWeather: {},
       listLocations: [],
       locationActivating: null,
+      funcRefreshData: [
+        {
+          refresh: "getAstronomy",
+          cache: "getAstronomyCache",
+        },
+        {
+          refresh: "getCurrentWeather",
+          cache: "getCurrentWeatherCache",
+        },
+        {
+          refresh: "getForecastWeather",
+          cache: "getForecastCache",
+        },
+      ],
     };
   },
   actions: {
@@ -19,6 +33,20 @@ const weatherStore = {
     },
     async updateLocation(context, { payload, params }) {
       const res = await axiosWeatherAPI.patch("/user/location", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async resetLocation(context, { payload, params }) {
+      const res = await axiosWeatherAPI.patch("/user/reset-location", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async deleteLocation(context, { params }) {
+      const res = await axiosWeatherAPI.delete("/user/location", {
         params,
       });
       const dataServer = res.data;
@@ -43,7 +71,17 @@ const weatherStore = {
       }
       return dataServer;
     },
-    async getLocation() {
+    async getLocation(context, { mode } = {}) {
+      if (mode != "gps") {
+        const locationActivating = await this.getters.getStorage(
+          "locationActivating"
+        );
+        if (locationActivating?.value) {
+          const { lat, lon } = locationActivating.value.location;
+          const q = [lat, lon];
+          return q.toString();
+        }
+      }
       const locations = await this.getters.getStorage("userLocation");
       let q = "";
       if (locations?.value) {
@@ -155,6 +193,22 @@ const weatherStore = {
         timeOut: TIME_OUT,
         callback: () => dispatch("getForecastWeather", params),
       });
+    },
+    async refreshData(context) {
+      const listNeedFresh = context.state.funcRefreshData;
+      return Promise.all(
+        listNeedFresh.map(({ refresh }) => {
+          return context.dispatch(refresh);
+        })
+      );
+    },
+    async getCacheData(context) {
+      const listNeedFresh = context.state.funcRefreshData;
+      return Promise.all(
+        listNeedFresh.map(({ cache }) => {
+          return context.dispatch(cache);
+        })
+      );
     },
   },
 };
