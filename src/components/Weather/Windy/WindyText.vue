@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     unit() {
-      return this.$store.getters.get("windy", "unit");
+      return this.$store.getters.get("unit", "unit")?.windy;
     },
     isKmh() {
       return this.unit === "kph";

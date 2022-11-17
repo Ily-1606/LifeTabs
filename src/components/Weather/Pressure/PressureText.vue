@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     unit() {
-      return this.$store.getters.get("pressure", "unit");
+      return this.$store.getters.get("unit", "unit")?.pressure;
     },
     isPressureIn() {
       return this.unit === "in";

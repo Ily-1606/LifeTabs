@@ -173,7 +173,7 @@ export default {
       this.listAdded = [];
     },
     async getLocation() {
-      await this.$store.dispatch("weather/fetchLocations");
+      await this.$store.dispatch("weather/fetchUserSetting");
     },
     async changeLocation(locationId) {
       const listSaved = await Promise.all(this.listSaved);

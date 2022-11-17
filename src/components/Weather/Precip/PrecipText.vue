@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     unit() {
-      return this.$store.getters.get("precip", "unit");
+      return this.$store.getters.get("unit", "unit")?.precip;
     },
     isPrecipMm() {
       return this.unit === "mm";

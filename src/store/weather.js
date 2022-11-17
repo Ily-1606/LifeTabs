@@ -52,7 +52,18 @@ const weatherStore = {
       const dataServer = res.data;
       return dataServer;
     },
-    async fetchLocations(context, { params = {} } = {}) {
+    async updateUnit(
+      context,
+      { payload = {}, params = {}, options = {} } = {}
+    ) {
+      const res = await axiosWeatherAPI.patch("/user/unit", payload, {
+        params,
+        ...options,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async fetchUserSetting(context, { params = {} } = {}) {
       const res = await axiosWeatherAPI.get("/user/config", {
         params,
       });
@@ -67,6 +78,11 @@ const weatherStore = {
           key: "locationActivating",
           value: dataServer.data.location.current_setting,
           module: "weather",
+        });
+        this.commit("setStorageVsStore", {
+          key: "unit",
+          value: dataServer.data.unit.current_setting.unit,
+          module: "unit",
         });
       }
       return dataServer;

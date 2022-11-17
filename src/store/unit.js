@@ -7,10 +7,12 @@ export default {
        *  // pressure: mb (Pressure in millibars) || in (Pressure in inches)
        *  // precip: mm (Precipitation amount in millimeters) || in (Precipitation amount in inches)
        */
-      temp: "c",
-      windy: "kph",
-      pressure: "in",
-      precip: "mm",
+      unit: {
+        temp: "c",
+        windy: "kph",
+        pressure: "in",
+        precip: "mm",
+      },
     };
   },
   namespaced: true,
