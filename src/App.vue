@@ -26,6 +26,8 @@ export default {
       handler() {
         if (this.$route.meta.layout) {
           this.layout = this.$route.meta.layout;
+        } else {
+          this.layout = "default";
         }
       },
       deep: true,

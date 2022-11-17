@@ -19,7 +19,7 @@
           <div class="flex-none">
             <VueFontAwesome
               icon="fa-light fa-plus"
-              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md"
+              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md cursor-pointer"
               @click="isOpenModalLocation = true"
             />
           </div>
@@ -44,7 +44,8 @@
           <div class="flex-none">
             <VueFontAwesome
               icon="fa-light fa-gear"
-              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md"
+              class="w-4 h-4 p-2 box-content border border-blue-500 rounded-md cursor-pointer"
+              @click="isOpenModalUnit = true"
             />
           </div>
         </div>
@@ -74,6 +75,11 @@
       :is-open="true"
       @close-modal="isOpenModalLocation = false"
     />
+    <ModalUnitSetting
+      v-if="isOpenModalUnit"
+      :is-open="true"
+      @close-modal="isOpenModalUnit = false"
+    />
   </div>
 </template>
 
@@ -89,6 +95,7 @@ import { minuteAgo } from "~/utils/event";
 import TempText from "~/components/Weather/Temp/TempText.vue";
 import GraphWeather from "~/components/Weather/DetailPanel/GraphWeather.vue";
 import ModalLocation from "~/components/Modal/ModalLocation.vue";
+import ModalUnitSetting from "~/components/Modal/ModalUnitSetting.vue";
 export default {
   name: "WeatherView",
   components: {
@@ -101,6 +108,7 @@ export default {
     TempText,
     GraphWeather,
     ModalLocation,
+    ModalUnitSetting,
   },
   data() {
     return {
@@ -108,6 +116,7 @@ export default {
       timmerAgoId: null,
       isLoadingWeather: false,
       isOpenModalLocation: false,
+      isOpenModalUnit: false,
     };
   },
   computed: {

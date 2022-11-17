@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     unit() {
-      return this.$store.getters.get("temp", "unit");
+      return this.$store.getters.get("unit", "unit")?.temp;
     },
     isTempC() {
       return this.unit === "c";

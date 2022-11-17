@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "~/router";
+import { removeStorage } from "./storage";
 
 const axiosApi = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
@@ -27,6 +28,9 @@ axiosApi.interceptors.response.use(
        * //TODO Redirect to welcome page if server return status 401
        */
       if (status === 401) {
+        removeStorage({
+          key: "userToken",
+        });
         router.push({ name: "welcome" });
       }
     } catch (e) {
