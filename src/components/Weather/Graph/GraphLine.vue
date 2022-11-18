@@ -24,7 +24,7 @@ const min_temp = () => {
       min = temp[props.type];
     }
   });
-  return min;
+  return Math.floor(min);
 };
 const max_temp = () => {
   let max = props.temp[0]?.[props.type];
@@ -33,7 +33,7 @@ const max_temp = () => {
       max = temp[props.type];
     }
   });
-  return max;
+  return Math.ceil(max);
 };
 const graphLine = ref();
 const fontFamily = window
