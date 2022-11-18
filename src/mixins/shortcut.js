@@ -10,5 +10,10 @@ export default {
         name: "home",
       });
     },
+    toShortcut() {
+      this.$router.push({
+        name: "shortcut",
+      });
+    },
   },
 };
