@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 const HomeView = import("../views/HomeView.vue");
 const WeatherView = import("../views/WeatherView.vue");
+const ShortcutView = import("../views/ShortcutView.vue");
 import { onlyGuest, onlyUser } from "~/middleware/auth/checkUser";
 
 const handlerMiddlewares = (middlewares, next) => {
@@ -49,6 +50,23 @@ const routes = [
     meta: {
       layout: "user",
       active: "weather",
+    },
+  },
+  {
+    path: "/shortcut",
+    name: "shortcut",
+    component: () => ShortcutView,
+    beforeEnter: function (to, from, next) {
+      const middlewares = [
+        onlyUser.bind(null, () => {
+          return next({ name: "welcome" });
+        }),
+      ];
+      handlerMiddlewares(middlewares, next);
+    },
+    meta: {
+      layout: "user",
+      active: "shortcut",
     },
   },
   {

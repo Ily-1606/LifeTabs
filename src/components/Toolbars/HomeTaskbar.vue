@@ -9,22 +9,22 @@
       :key="index"
       class="flex items-center justify-between gap-x-3 cursor-pointer transition-all px-4 py-2 duration-[200ms]"
       :class="{
-        'bg-blue-500 rounded-xl': routerActivating === shortcut.name,
+        'bg-blue-500 rounded-xl': routerActivating === shortcut.routerName,
         'flex-row-reverse': index === shortcuts.length - 1,
       }"
     >
       <VueFontAwesome
         :icon="shortcut.icon"
         class="w-6 h-6"
-        :class="{ 'fill-white': routerActivating === shortcut.name }"
+        :class="{ 'fill-white': routerActivating === shortcut.routerName }"
       />
       <div
         class="w-0 text-ellipsis whitespace-nowrap overflow-hidden transition-all duration-[200ms]"
         :class="{
-          '!w-14 text-white': routerActivating === shortcut.name,
+          '!w-14 text-white': routerActivating === shortcut.routerName,
         }"
       >
-        {{ shortcut.text }}
+        {{ shortcut.name }}
       </div>
     </div>
   </div>
