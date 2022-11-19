@@ -5,6 +5,8 @@ import {
 } from "@ily1606/pro-regular-svg-fontawesome";
 import {
   faCaretLeft,
+  faCaretUp,
+  faCaretDown,
   faSpinnerThird,
 } from "@ily1606/pro-solid-svg-fontawesome";
 import {
@@ -41,6 +43,8 @@ import {
   faMagnifyingGlass,
   faLocationDot,
   faLocationCheck,
+  faPencil,
+  faTrash,
 } from "@ily1606/pro-light-svg-fontawesome";
 const icons = {
   faCircleExclamation,
@@ -80,6 +84,10 @@ const icons = {
   faLocationDot,
   faLocationCheck,
   faXmark,
+  faPencil,
+  faTrash,
+  faCaretUp,
+  faCaretDown,
 };
 const setup = (app) => {
   app.use(Config, icons);
