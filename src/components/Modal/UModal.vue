@@ -27,7 +27,8 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+              class="w-full transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+              :class="dialogClass"
             >
               <DialogTitle
                 as="h3"
@@ -56,6 +57,12 @@ const props = defineProps({
   isOpen: {
     type: Boolean,
     default: false,
+  },
+  dialogClass: {
+    type: [String, Object, Array],
+    default() {
+      return "max-w-xl";
+    },
   },
 });
 const emits = defineEmits(["closeModal"]);
