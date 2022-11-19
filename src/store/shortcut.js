@@ -53,6 +53,20 @@ const shortCutStore = {
       const dataServer = res.data;
       return dataServer;
     },
+    async editShortcut(context, { payload = {}, params = {} } = {}) {
+      const res = await axiosApi.patch("/shortcut", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async deleteShortcut(context, { params = {} } = {}) {
+      const res = await axiosApi.delete("/shortcut", {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
     async getShortcut(context, { params = {} } = {}) {
       const res = await axiosApi.get("/shortcut", {
         params,

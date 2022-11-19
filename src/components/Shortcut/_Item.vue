@@ -53,13 +53,15 @@
           <div>{{ props.data.name }}</div>
           <div class="flex gap-x-4 text-sm mt-3 items-center">
             <div
-              class="flex-auto flex items-center gap-x-2 fill-blue-400 text-blue-500"
+              class="flex-auto flex items-center gap-x-2 fill-blue-400 text-blue-500 cursor-pointer"
+              @click="emits('edit', data)"
             >
               <VueFontAwesome icon="fa-light fa-pencil" class="w-4 h-4" />
               <div class="whitespace-nowrap overflow-hidden">Chỉnh sửa</div>
             </div>
             <div
-              class="flex-auto flex items-center gap-x-2 fill-red-400 text-red-500"
+              class="flex-auto flex items-center gap-x-2 fill-red-400 text-red-500 cursor-pointer"
+              @click="emits('delete', data)"
             >
               <VueFontAwesome icon="fa-light fa-trash" class="w-4 h-4" />
               <div class="whitespace-nowrap overflow-hidden">Xóa</div>
@@ -93,7 +95,12 @@ const props = defineProps({
     },
     required: true,
   },
+  isSystem: {
+    type: [Boolean, Number],
+    default: () => false,
+  },
 });
+const emits = defineEmits(["edit", "delete"]);
 const navigation = () => {
   if (props.data.action) {
     const func = shortcut.methods[props.data.action];
@@ -112,6 +119,7 @@ const isTop = ref(false);
 onMounted(() => {
   let idTimer;
   shortcutItem.value.addEventListener("mousedown", () => {
+    if (props.isSystem) return;
     idTimer = setTimeout(() => {
       const reactBouding = shortcutItem.value.getBoundingClientRect();
       if (window.innerHeight < reactBouding.y + 200) {
@@ -121,7 +129,7 @@ onMounted(() => {
       nextTick(() => {
         popup.value.focus();
       });
-    }, 1000);
+    }, 500);
   });
   shortcutItem.value.addEventListener("mouseup", () => {
     if (idTimer) {

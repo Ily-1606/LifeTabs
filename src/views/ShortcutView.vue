@@ -40,7 +40,10 @@
           <Item
             v-for="(shortcut, index) in groupShortcut.shortcuts"
             :data="shortcut"
+            :is-system="shortcut.isSystem ? true : false"
             :key="index"
+            @edit="handleOpenModalEdit"
+            @delete="handleOpenModalDelete"
           />
         </div>
       </div>
@@ -50,6 +53,18 @@
       :is-open="true"
       @close-modal="isOpenModalAddShortcut = false"
     />
+    <ModalEditShortcut
+      v-if="isOpenModalEditShortcut"
+      :is-open="true"
+      :data="currentDataEditing"
+      @close-modal="isOpenModalEditShortcut = false"
+    />
+    <ModalDeleteShortcut
+      v-if="isOpenModalDeleteShortcut"
+      :is-open="true"
+      :data="currentDataEditing"
+      @close-modal="isOpenModalDeleteShortcut = false"
+    />
   </div>
 </template>
 <script setup>
@@ -58,11 +73,16 @@ import { watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import Item from "~/components/Shortcut/_Item.vue";
 import ModalAddShortcut from "~/components/Modal/ModalAddShortcut.vue";
+import ModalEditShortcut from "~/components/Modal/ModalEditShortcut.vue";
+import ModalDeleteShortcut from "~/components/Modal/ModalDeleteShortcut.vue";
 
 const store = useStore();
 const search = () => {};
 const q = ref("");
+const isOpenModalEditShortcut = ref(false);
 const isOpenModalAddShortcut = ref(false);
+const isOpenModalDeleteShortcut = ref(false);
+let currentDataEditing = ref({});
 watch(q, (newValue, oldValue, onCleanup) => {
   const idTimer = setTimeout(() => {
     console.log(newValue);
@@ -72,7 +92,13 @@ watch(q, (newValue, oldValue, onCleanup) => {
 const listShortcut = computed(() => {
   const baseShortcuts = store.getters.get("baseShortcut", "shortcut") ?? [];
   const shortcuts = store.getters.get("shortcuts", "shortcut") ?? [];
-  return [...baseShortcuts, ...shortcuts];
+  return [
+    ...baseShortcuts.map((_) => {
+      _.isSystem = true;
+      return _;
+    }),
+    ...shortcuts,
+  ];
 });
 const listShortcutGroup = computed(() => {
   let mapChar = {};
@@ -92,6 +118,14 @@ const listShortcutGroup = computed(() => {
     }, {});
   return mapChar;
 });
+const handleOpenModalEdit = (shortcutData) => {
+  isOpenModalEditShortcut.value = true;
+  currentDataEditing.value = shortcutData;
+};
+const handleOpenModalDelete = (shortcutData) => {
+  isOpenModalDeleteShortcut.value = true;
+  currentDataEditing.value = shortcutData;
+};
 store.dispatch("shortcut/getShortcutCached");
 </script>
 <style scoped>
