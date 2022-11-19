@@ -1,3 +1,5 @@
+import { axiosApi } from "~/utils/axios";
+
 const shortCutStore = {
   namespaced: true,
   state() {
@@ -39,9 +41,42 @@ const shortCutStore = {
           icon: "fa-light fa-gear",
         },
       ],
+      shortcuts: [],
     };
   },
   getters: {},
-  action: {},
+  actions: {
+    async addShortcut(context, { payload = {}, params = {} } = {}) {
+      const res = await axiosApi.post("/shortcut", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async getShortcut(context, { params = {} } = {}) {
+      const res = await axiosApi.get("/shortcut", {
+        params,
+      });
+      const dataServer = res.data;
+      if (dataServer.success) {
+        this.commit("setStorageVsStore", {
+          key: "shortcuts",
+          value: dataServer.data,
+          module: "shortcut",
+        });
+        return dataServer.data;
+      }
+      return dataServer;
+    },
+    async getShortcutCached({ rootState, dispatch }, { params } = {}) {
+      const TIME_OUT = rootState.timeOutFetchShortcut;
+      return await this.dispatch("getFromStorage", {
+        key: "shortcuts",
+        module: "shortcut",
+        timeOut: TIME_OUT,
+        callback: () => dispatch("getShortcut", params),
+      });
+    },
+  },
 };
 export default shortCutStore;
