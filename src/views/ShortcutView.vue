@@ -79,26 +79,31 @@ import ModalDeleteShortcut from "~/components/Modal/ModalDeleteShortcut.vue";
 const store = useStore();
 const search = () => {};
 const q = ref("");
+const Q = ref();
 const isOpenModalEditShortcut = ref(false);
 const isOpenModalAddShortcut = ref(false);
 const isOpenModalDeleteShortcut = ref(false);
 let currentDataEditing = ref({});
 watch(q, (newValue, oldValue, onCleanup) => {
   const idTimer = setTimeout(() => {
-    console.log(newValue);
+    Q.value = newValue;
   }, 300);
   onCleanup(() => clearTimeout(idTimer));
 });
 const listShortcut = computed(() => {
   const baseShortcuts = store.getters.get("baseShortcut", "shortcut") ?? [];
   const shortcuts = store.getters.get("shortcuts", "shortcut") ?? [];
-  return [
+  const res = [
     ...baseShortcuts.map((_) => {
       _.isSystem = true;
       return _;
     }),
     ...shortcuts,
   ];
+  if (Q.value) {
+    return res.filter((_) => _.name.includes(Q.value));
+  }
+  return res;
 });
 const listShortcutGroup = computed(() => {
   let mapChar = {};
