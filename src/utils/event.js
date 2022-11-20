@@ -1,27 +1,27 @@
-const estemateDays = (estemateTime) => {
-  return Math.floor(estemateTime / 1000 / 60 / 60 / 24);
+const estimatedDays = (estimatedTime) => {
+  return Math.floor(estimatedTime / 1000 / 60 / 60 / 24);
 };
-const estemateHours = (estemateTime) => {
-  return Math.floor((estemateTime / 1000 / 60 / 60) % 24);
+const estimatedHours = (estimatedTime) => {
+  return Math.floor((estimatedTime / 1000 / 60 / 60) % 24);
 };
-const estemateMinutes = (estemateTime) => {
-  return Math.floor((estemateTime / 1000 / 60) % 60);
+const estimatedMinutes = (estimatedTime) => {
+  return Math.floor((estimatedTime / 1000 / 60) % 60);
 };
-const estemateSeconds = (estemateTime) => {
-  return Math.floor(((estemateTime / 1000) % 60) % 60);
+const estimatedSeconds = (estimatedTime) => {
+  return Math.floor(((estimatedTime / 1000) % 60) % 60);
 };
 
 const minuteAgo = (time_start, time_end) => {
-  const estemateTime = time_end - time_start;
-  return Math.floor(estemateTime / 1000 / 60);
+  const estimatedTime = time_end - time_start;
+  return Math.floor(estimatedTime / 1000 / 60);
 };
 
 const timeAgo = (time_start, time_end) => {
-  const estemateTime = Math.max(time_end - time_start, 0);
-  const days = estemateDays(estemateTime);
-  const hours = estemateHours(estemateTime);
-  const mins = estemateMinutes(estemateTime);
-  const sec = estemateSeconds(estemateTime);
+  const estimatedTime = Math.max(time_end - time_start, time_start - time_end);
+  const days = estimatedDays(estimatedTime);
+  const hours = estimatedHours(estimatedTime);
+  const mins = estimatedMinutes(estimatedTime);
+  const sec = estimatedSeconds(estimatedTime);
   let str;
   if (days > 0) {
     str = `${days < 10 ? "0" + days : days} ngày ${
@@ -42,14 +42,15 @@ const timeAgo = (time_start, time_end) => {
 };
 const countDown = (time_start, time_end) => {
   let str = timeAgo(time_start, time_end);
-  str += " nữa";
+  if (time_start < time_end) str += " nữa";
+  else str += " trước";
   return str;
 };
 export {
-  estemateDays,
-  estemateHours,
-  estemateMinutes,
-  estemateSeconds,
+  estimatedDays,
+  estimatedHours,
+  estimatedMinutes,
+  estimatedSeconds,
   countDown,
   timeAgo,
   minuteAgo,
