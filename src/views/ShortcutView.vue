@@ -1,15 +1,7 @@
 <template>
   <div class="max-w-[50%] mx-auto pb-[100px]">
     <div class="w-max mx-auto sticky top-0">
-      <div
-        class="drop-rain group fill-slate-500 group cursor-pointer"
-        @click="isOpenModalAddShortcut = true"
-      >
-        <VueFontAwesome
-          icon="fa-light fa-plus"
-          class="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 backdrop-blur-md group-hover:fill-slate-50 group-hover:rotate-180 transition-transform duration-500"
-        />
-      </div>
+      <RainDrop @open="isOpenModalAddShortcut = true" />
     </div>
     <div
       class="border border-blue-500 rounded-full flex pr-4 pl-4 items-center"
@@ -75,6 +67,7 @@ import Item from "~/components/Shortcut/_Item.vue";
 import ModalAddShortcut from "~/components/Modal/ModalAddShortcut.vue";
 import ModalEditShortcut from "~/components/Modal/ModalEditShortcut.vue";
 import ModalDeleteShortcut from "~/components/Modal/ModalDeleteShortcut.vue";
+import RainDrop from "~/components/Other/RainDrop.vue";
 
 const store = useStore();
 const search = () => {};
@@ -133,40 +126,3 @@ const handleOpenModalDelete = (shortcutData) => {
 };
 store.dispatch("shortcut/getShortcutCached");
 </script>
-<style scoped>
-.drop-rain {
-  --color: #eaeaeb;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  position: relative;
-  transform: translateY(-35px);
-  background-color: var(--color);
-  border: 6px solid var(--color);
-}
-.drop-rain:hover {
-  --color: rgb(96 165 250);
-}
-.drop-rain::before {
-  content: "";
-  position: absolute;
-  left: -22px;
-  top: 30px;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-top-right-radius: 20px;
-  box-shadow: 1px -10px var(--color);
-}
-.drop-rain::after {
-  content: "";
-  position: absolute;
-  right: -22px;
-  top: 30px;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-top-left-radius: 20px;
-  box-shadow: -1px -10px var(--color);
-}
-</style>

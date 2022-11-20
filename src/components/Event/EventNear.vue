@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     countDown() {
+      this.timeStr = countDown(new Date().getTime(), this.eventTime);
       setInterval(() => {
         this.timeStr = countDown(new Date().getTime(), this.eventTime);
       }, 1000);
