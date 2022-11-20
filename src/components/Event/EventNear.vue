@@ -25,7 +25,7 @@ import { countDown } from "~/utils/event";
 export default {
   computed: {
     listEvents() {
-      return this.$store.getters.get("listEvents");
+      return this.$store.getters.get("listEvents", "event");
     },
     nextEvent() {
       return this.listEvents[0];

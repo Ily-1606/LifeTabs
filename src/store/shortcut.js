@@ -28,6 +28,7 @@ const shortCutStore = {
           name: "Sự kiện",
           action: "toEvent",
           icon: "fa-light fa-calendar",
+          routerName: "event",
         },
         {
           name: "Phím tắt",
