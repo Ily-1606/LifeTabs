@@ -3,17 +3,11 @@ import { createStore } from "vuex";
 import weatherStore from "./weather";
 import shortCutStore from "./shortcut";
 import unitStore from "./unit";
+import eventStore from "./event";
 
 export default createStore({
   state: {
     userInfo: {},
-    listEvents: [
-      {
-        name: "Sinh nhật PingPong",
-        next_time: new Date().getTime() + 1000 * 60 * 24 * 2, // 2 days
-        created_at: new Date().getTime(),
-      },
-    ],
     timeOutAstronomy: 1000 * 60 * 15,
     timeOutFetchShare: 1000 * 60 * 15,
     timeOutFetchCurrentWeather: 1000 * 60 * 15,
@@ -162,5 +156,6 @@ export default createStore({
     weather: weatherStore,
     shortcut: shortCutStore,
     unit: unitStore,
+    event: eventStore,
   },
 });

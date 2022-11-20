@@ -15,5 +15,10 @@ export default {
         name: "shortcut",
       });
     },
+    toEvent() {
+      this.$router.push({
+        name: "event",
+      });
+    },
   },
 };
