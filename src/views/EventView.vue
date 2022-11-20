@@ -7,7 +7,10 @@
         <div class="flex-none"></div>
         <div class="flex-auto flex flex-col overflow-hidden"></div>
       </div>
-      <div class="flex-auto max-w-[600px] space-y-10 py-6 pb-[100px]">
+      <div class="flex-auto max-w-[600px] space-y-10 pb-[100px]">
+        <div class="w-max mx-auto sticky top-0">
+          <RainDrop @open="isOpenModalAddShortcut = true" />
+        </div>
         <CountDown class="space-y-2">
           <template #name="{ data }">
             <div class="text-center mx-auto text-2xl">{{ data }}</div>
@@ -25,4 +28,5 @@
 </template>
 <script setup>
 import CountDown from "~/components/Event/CountDown.vue";
+import RainDrop from "~/components/Other/RainDrop.vue";
 </script>
