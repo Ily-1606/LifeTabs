@@ -13,6 +13,7 @@ export default createStore({
     timeOutFetchCurrentWeather: 1000 * 60 * 15,
     timeOutFetchForecastWeather: 1000 * 60 * 15,
     timeOutFetchShortcut: 1000 * 60 * 15,
+    timeOutFetchEvent: 1000 * 60 * 15,
   },
   getters: {
     get: (state) => (key, module) => {

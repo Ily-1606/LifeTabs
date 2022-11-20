@@ -2,6 +2,7 @@
   <div>
     <slot name="name" :data="eventName"> </slot>
     <slot name="time" :data="timeStr"></slot>
+    <slot name="description" :data="nextEvent.description"></slot>
   </div>
 </template>
 <script>
