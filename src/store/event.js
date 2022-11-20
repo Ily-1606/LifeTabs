@@ -1,5 +1,5 @@
 import { axiosApi } from "~/utils/axios";
-import solarLunar from "solarLunar";
+import solarLunar from "solarlunar";
 const eventStore = {
   namespaced: true,
   state() {
