@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="min-h-screen h-screen min-w-screen flex p-6 justify-between">
+    <div class="min-h-screen min-w-screen flex px-6 justify-between">
       <div
-        class="flex flex-col flex-none min-w-[300px] space-y-8 h-full overflow-hidden"
+        class="flex flex-col flex-none min-w-[300px] h-screen space-y-8 overflow-hidden sticky top-0 py-6"
       >
         <div class="flex-none">
           <EventNear />
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="flex-auto max-w-[600px]">
+      <div class="flex-auto max-w-[600px] space-y-10 py-6 pb-[100px]">
         <div class="mx-auto my-6">
           <InfoLess />
         </div>
@@ -36,7 +36,7 @@
           <MediaOverView />
         </div>
       </div>
-      <div class="flex-none w-[350px] space-y-6">
+      <div class="flex-none w-[350px] space-y-6 py-6 sticky top-0 h-screen">
         <WeatherItemOverview />
         <ItemObjectRise />
       </div>
