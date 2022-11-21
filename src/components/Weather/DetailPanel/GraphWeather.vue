@@ -1,5 +1,9 @@
 <template>
-  <div class="grid u-panel text-sm" :class="numberClasses[0]">
+  <div
+    class="grid u-panel text-sm"
+    :class="numberClasses[0]"
+    v-if="dailyForecasts5DayTemp.length"
+  >
     <div
       v-for="(forecast, index) in dailyForecasts5DayTemp"
       :key="index"

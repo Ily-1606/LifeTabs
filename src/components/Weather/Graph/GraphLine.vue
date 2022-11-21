@@ -85,14 +85,14 @@ const draw = () => {
     }
   }
 };
-watch(
-  () => props.temp,
-  () => {
-    draw();
-  },
-  { deep: true }
-);
 onMounted(() => {
   draw();
+  watch(
+    () => props.temp,
+    () => {
+      draw();
+    },
+    { deep: true }
+  );
 });
 </script>
