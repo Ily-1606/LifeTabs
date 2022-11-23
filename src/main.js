@@ -20,18 +20,23 @@ const handlers = Promise.all([
   import("./utils/fontawesome"),
   import("./plugins/moment"),
   import("./plugins/lodash"),
+  import("v-calendar"),
 ]);
-handlers.then(([store, router, animate, fontawesome, moment, lodash]) => {
-  app
-    .use(store.default)
-    .use(router.default)
-    .use(animate.autoAnimatePlugin)
-    .use(moment.default)
-    .use(lodash.default);
-  fontawesome.setup(app);
-  app.mount("#app");
-});
+handlers.then(
+  ([store, router, animate, fontawesome, moment, lodash, VCalendar]) => {
+    app
+      .use(store.default)
+      .use(router.default)
+      .use(animate.autoAnimatePlugin)
+      .use(moment.default)
+      .use(VCalendar.default, {})
+      .use(lodash.default);
+    fontawesome.setup(app);
+    app.mount("#app");
+  }
+);
 
 import "./utils/storage";
 import "~/assets/css/main.css";
+import "v-calendar/dist/style.css";
 import("@lottiefiles/lottie-player");
