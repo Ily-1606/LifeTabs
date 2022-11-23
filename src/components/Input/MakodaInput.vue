@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
-    <input
+    <component
+      :is="tag"
       class="w-full px-2 py-2 outline-none on-focus"
       :id="id"
       v-bind="$attrs"
@@ -45,10 +46,10 @@
   </div>
 </template>
 <script>
-import UIpnut from "./UInput.vue";
+import UInput from "./UInput.vue";
 import UTooltip from "~/components/Tooltip/UTooltip.vue";
 export default {
-  extends: UIpnut,
+  extends: UInput,
   components: {
     UTooltip,
   },
@@ -58,6 +59,10 @@ export default {
       default() {
         return [];
       },
+    },
+    tag: {
+      type: String,
+      default: () => "input",
     },
   },
   computed: {

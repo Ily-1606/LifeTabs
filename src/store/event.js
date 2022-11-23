@@ -62,6 +62,13 @@ const eventStore = {
       }
       return dataServer;
     },
+    async addEvent(context, { payload = {}, params = {} } = {}) {
+      const res = await axiosApi.post("/event", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
     async getEventCached({ rootState, dispatch }, { params } = {}) {
       const TIME_OUT = rootState.timeOutFetchEvent;
       this.dispatch("getFromStorage", {

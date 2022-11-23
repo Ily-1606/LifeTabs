@@ -14,7 +14,7 @@
       </div>
       <div class="flex-auto max-w-[600px] space-y-10 pb-[100px]">
         <div class="w-max mx-auto sticky top-0">
-          <RainDrop @open="isOpenModalAddShortcut = true" />
+          <RainDrop @open="isOpenModalAddEvent = true" />
         </div>
         <CountDown class="space-y-2">
           <template #name="{ data }">
@@ -35,6 +35,11 @@
         </div>
       </div>
     </div>
+    <ModalAddEvent
+      :is-open="true"
+      v-if="isOpenModalAddEvent"
+      @close-modal="isOpenModalAddEvent = false"
+    />
   </div>
 </template>
 <script setup>
@@ -42,7 +47,10 @@ import CountDown from "~/components/Event/CountDown.vue";
 import RainDrop from "~/components/Other/RainDrop.vue";
 import NextEvent from "~/components/Event/NextEvent.vue";
 import PreEvent from "~/components/Event/PreEvent.vue";
+import ModalAddEvent from "~/components/Modal/ModalAddEvent.vue";
 import { useStore } from "vuex";
+import { ref } from "@vue/reactivity";
 const store = useStore();
+const isOpenModalAddEvent = ref(false);
 store.dispatch("event/getEventCached");
 </script>
