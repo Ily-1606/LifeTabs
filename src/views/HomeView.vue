@@ -2,7 +2,7 @@
   <div>
     <div class="min-h-screen min-w-screen flex px-6 justify-between">
       <div
-        class="flex flex-col flex-none min-w-[300px] h-screen space-y-8 overflow-hidden sticky top-0 py-6"
+        class="flex flex-col flex-none w-[300px] h-screen space-y-8 overflow-hidden sticky top-0 py-6"
       >
         <div class="flex-none">
           <EventNear />
@@ -79,6 +79,9 @@ export default {
     async getData() {
       this.$store.dispatch("weather/getCacheData");
     },
+    async getEvent() {
+      this.$store.dispatch("event/getEventCached");
+    },
     reloadLocation() {
       geoLocation.query().then((coords) => {
         if (coords) {
@@ -95,6 +98,7 @@ export default {
     this.fetchShare();
     this.getData();
     this.reloadLocation();
+    this.getEvent();
   },
 };
 </script>

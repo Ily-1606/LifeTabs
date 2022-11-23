@@ -36,6 +36,7 @@
             :key="index"
             @edit="handleOpenModalEdit"
             @delete="handleOpenModalDelete"
+            @pin="handlePinShortcut"
           />
         </div>
       </div>
@@ -124,5 +125,15 @@ const handleOpenModalDelete = (shortcutData) => {
   isOpenModalDeleteShortcut.value = true;
   currentDataEditing.value = shortcutData;
 };
-store.dispatch("shortcut/getShortcutCached");
+const handlePinShortcut = (shortcutData) => {
+  store
+    .dispatch("shortcut/pinShortcut", {
+      params: {
+        id: shortcutData.id,
+      },
+    })
+    .then(() => {
+      store.dispatch("shortcut/getShortcut");
+    });
+};
 </script>

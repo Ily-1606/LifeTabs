@@ -45,6 +45,7 @@ import {
   faLocationCheck,
   faPencil,
   faTrash,
+  faThumbtack,
 } from "@ily1606/pro-light-svg-fontawesome";
 const icons = {
   faCircleExclamation,
@@ -88,6 +89,7 @@ const icons = {
   faTrash,
   faCaretUp,
   faCaretDown,
+  faThumbtack,
 };
 const setup = (app) => {
   app.use(Config, icons);

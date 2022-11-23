@@ -8,12 +8,12 @@ import eventStore from "./event";
 export default createStore({
   state: {
     userInfo: {},
-    timeOutAstronomy: 1000 * 60 * 15,
-    timeOutFetchShare: 1000 * 60 * 15,
-    timeOutFetchCurrentWeather: 1000 * 60 * 15,
-    timeOutFetchForecastWeather: 1000 * 60 * 15,
-    timeOutFetchShortcut: 1000 * 60 * 15,
-    timeOutFetchEvent: 1000 * 60 * 15,
+    timeOutAstronomy: 1000 * 60 * 15 * 150000,
+    timeOutFetchShare: 1000 * 60 * 15 * 150000,
+    timeOutFetchCurrentWeather: 1000 * 60 * 15 * 150000,
+    timeOutFetchForecastWeather: 1000 * 60 * 15 * 150000,
+    timeOutFetchShortcut: 1000 * 60 * 15 * 150000,
+    timeOutFetchEvent: 1000 * 60 * 15 * 150000,
   },
   getters: {
     get: (state) => (key, module) => {

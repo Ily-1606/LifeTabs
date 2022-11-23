@@ -61,6 +61,26 @@ const shortCutStore = {
       const dataServer = res.data;
       return dataServer;
     },
+    async pinShortcut(context, { params = {} } = {}) {
+      const res = await context.dispatch("editShortcut", {
+        payload: {
+          isPin: true,
+        },
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async unPinShortcut(context, { params = {} } = {}) {
+      const res = await context.dispatch("editShortcut", {
+        payload: {
+          isPin: false,
+        },
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
     async deleteShortcut(context, { params = {} } = {}) {
       const res = await axiosApi.delete("/shortcut", {
         params,
