@@ -1,7 +1,9 @@
 <template>
   <div>
     <slot />
-    <HomeTaskbar class="fixed bottom-1 left-1/2 -translate-x-1/2" />
+    <div class="fixed bottom-1 left-1/2 -translate-x-1/2">
+      <HomeTaskbar />
+    </div>
   </div>
 </template>
 <script>

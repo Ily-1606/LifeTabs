@@ -41,7 +41,7 @@
         ref="popup"
       >
         <div
-          class="relative py-3 px-5 rounded-lg bg-slate-200/50 backdrop-blur-md shadow-md"
+          class="relative rounded-lg bg-slate-200/50 backdrop-blur-md shadow-md"
         >
           <VueFontAwesome
             :icon="isTop ? 'fa-solid fa-caret-down' : 'fa-solid fa-caret-up'"
@@ -50,18 +50,27 @@
               isTop ? 'bottom-0 translate-y-1/2' : 'top-0 -translate-y-1/2'
             "
           />
-          <div>{{ props.data.name }}</div>
-          <div class="flex gap-x-4 text-sm mt-3 items-center">
+          <div class="py-3 px-5">{{ props.data.name }}</div>
+          <div class="flex flex-col gap-x-4 gap-y-1 text-sm">
             <div
-              class="flex-auto flex items-center gap-x-2 fill-blue-400 text-blue-500 cursor-pointer"
-              @click="emits('edit', data)"
+              class="flex-auto flex items-center gap-x-2 hover:bg-slate-300 cursor-pointer py-2 px-3"
+              @click="handleAction('edit', data)"
             >
               <VueFontAwesome icon="fa-light fa-pencil" class="w-4 h-4" />
               <div class="whitespace-nowrap overflow-hidden">Chỉnh sửa</div>
             </div>
             <div
-              class="flex-auto flex items-center gap-x-2 fill-red-400 text-red-500 cursor-pointer"
-              @click="emits('delete', data)"
+              class="flex-auto flex items-center gap-x-2 hover:bg-slate-300 cursor-pointer py-2 px-3"
+              @click="handleAction('pin', data)"
+            >
+              <VueFontAwesome icon="fa-light fa-thumbtack" class="w-4 h-4" />
+              <div class="whitespace-nowrap overflow-hidden">
+                Ghim vào taskbar
+              </div>
+            </div>
+            <div
+              class="flex-auto flex items-center gap-x-2 hover:bg-slate-300 fill-red-400 text-red-500 cursor-pointer py-2 px-3"
+              @click="handleAction('delete', data)"
             >
               <VueFontAwesome icon="fa-light fa-trash" class="w-4 h-4" />
               <div class="whitespace-nowrap overflow-hidden">Xóa</div>
@@ -118,9 +127,11 @@ const isShowOption = ref(false);
 const isTop = ref(false);
 onMounted(() => {
   let idTimer;
-  shortcutItem.value.addEventListener("mousedown", () => {
-    if (props.isSystem) return;
-    idTimer = setTimeout(() => {
+  shortcutItem.value.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+  shortcutItem.value.addEventListener("mousedown", (e) => {
+    const openOption = () => {
       const reactBouding = shortcutItem.value.getBoundingClientRect();
       if (window.innerHeight < reactBouding.y + 200) {
         isTop.value = true;
@@ -129,7 +140,18 @@ onMounted(() => {
       nextTick(() => {
         popup.value.focus();
       });
-    }, 500);
+    };
+
+    if (props.isSystem) return;
+    if (e.which === 3) {
+      // Right click
+      openOption();
+      e.preventDefault();
+    } else {
+      idTimer = setTimeout(() => {
+        openOption();
+      }, 500);
+    }
   });
   shortcutItem.value.addEventListener("mouseup", () => {
     if (idTimer) {
@@ -139,4 +161,8 @@ onMounted(() => {
     if (!isShowOption.value) navigation();
   });
 });
+const handleAction = (typeEmit, data) => {
+  isShowOption.value = false;
+  emits(typeEmit, data);
+};
 </script>
