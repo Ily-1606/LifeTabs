@@ -21,15 +21,26 @@ const handlers = Promise.all([
   import("./plugins/moment"),
   import("./plugins/lodash"),
   import("v-calendar"),
+  import("./locales/locales"),
 ]);
 handlers.then(
-  ([store, router, animate, fontawesome, moment, lodash, VCalendar]) => {
+  ([
+    store,
+    router,
+    animate,
+    fontawesome,
+    moment,
+    lodash,
+    VCalendar,
+    locales,
+  ]) => {
     app
       .use(store.default)
       .use(router.default)
       .use(animate.autoAnimatePlugin)
       .use(moment.default)
       .use(VCalendar.default, {})
+      .use(locales.setupI18n())
       .use(lodash.default);
     fontawesome.setup(app);
     app.mount("#app");

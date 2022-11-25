@@ -13,31 +13,31 @@ const shortCutStore = {
        */
       baseShortcut: [
         {
-          name: "Trang chủ",
+          name: "taskbar.icons.home",
           action: "toNewTab",
           icon: "fa-light fa-house-user",
           routerName: "home",
         },
         {
-          name: "Thời tiết",
+          name: "taskbar.icons.weather",
           action: "toWeather",
           icon: "fa-light fa-cloud-sun-rain",
           routerName: "weather",
         },
         {
-          name: "Sự kiện",
+          name: "taskbar.icons.event",
           action: "toEvent",
           icon: "fa-light fa-calendar",
           routerName: "event",
         },
         {
-          name: "Phím tắt",
+          name: "taskbar.icons.shortcut",
           action: "toShortcut",
           icon: "fa-light fa-keyboard",
           routerName: "shortcut",
         },
         {
-          name: "Cài đặt",
+          name: "taskbar.icons.setting",
           action: "toSetting",
           icon: "fa-light fa-gear",
         },

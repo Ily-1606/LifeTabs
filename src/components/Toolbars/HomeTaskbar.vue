@@ -84,7 +84,7 @@ export default {
       const shortcuts = this.$store.getters.get("shortcuts", "shortcut") ?? [];
       const res = [
         ...baseShortcuts.map((_) => {
-          _.isSystem = true;
+          (_.name = this.$t(_.name)), (_.isSystem = true);
           return _;
         }),
         ...shortcuts.filter((_) => _.isPin),
