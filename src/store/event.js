@@ -17,9 +17,14 @@ const eventStore = {
       if (dataServer.success) {
         const value = dataServer.data
           .map((event) => {
-            const dateObj = new Date();
-            const [date, month] = event.date.split("/");
-            dateObj.setMonth(month - 1, date);
+            let dateObj = new Date();
+            if (!event.full_date) {
+              const [date, month] = event.date.split("/");
+              dateObj.setMonth(month - 1, date);
+              dateObj.setHours(0, 0);
+            } else {
+              dateObj = new Date(event.full_date);
+            }
             let next_date = dateObj;
             if (event.type_time === 0) {
               const year = dateObj.getFullYear();
@@ -64,6 +69,20 @@ const eventStore = {
     },
     async addEvent(context, { payload = {}, params = {} } = {}) {
       const res = await axiosApi.post("/event", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async updateEvent(context, { payload = {}, params = {} } = {}) {
+      const res = await axiosApi.patch("/event", payload, {
+        params,
+      });
+      const dataServer = res.data;
+      return dataServer;
+    },
+    async deleteEvent(context, { params = {} } = {}) {
+      const res = await axiosApi.delete("/event", {
         params,
       });
       const dataServer = res.data;

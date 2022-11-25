@@ -27,7 +27,11 @@
           </div>
           <div class="mt-6 space-y-2">
             <label>Thời gian</label>
-            <v-date-picker class="h-full" v-model="formData.date">
+            <v-date-picker
+              class="h-full"
+              mode="dateTime"
+              v-model="formData.full_date"
+            >
               <template v-slot="{ inputValue, togglePopover }">
                 <div class="flex items-center relative">
                   <button
@@ -48,14 +52,14 @@
                   />
                   <div
                     class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 fill-red-500 group"
-                    v-if="v$.formData.date.$errors.length"
+                    v-if="v$.formData.full_date.$errors.length"
                   >
                     <div class="relative">
                       <VueFontAwesome icon="fa-regular fa-circle-exclamation" />
                       <UTooltip class="hidden group-hover:block">
                         <div
                           class="text-red-500 text-sm"
-                          v-for="error in v$.formData.date.$errors"
+                          v-for="error in v$.formData.full_date.$errors"
                           :key="error"
                         >
                           {{ error.$message }}
@@ -133,6 +137,7 @@ export default {
       formData: {
         name: "",
         description: "",
+        full_date: "",
         date: "",
         type_time: 1,
         schedule: 1,
@@ -179,11 +184,18 @@ export default {
         return;
       }
       this.isLoading = true;
-      this.sendData();
+      this.preSubmit();
     },
-    sendData() {
+    preSubmit() {
       const data = { ...this.formData };
-      data.date = `${data.date.getDate()}/${data.date.getMonth() + 1}`;
+      let full_date;
+      if (data.full_date.constructor === Date) {
+        full_date = data.full_date;
+      } else full_date = new Date(data.full_date);
+      data.date = `${full_date.getDate()}/${full_date.getMonth() + 1}`;
+      this.sendData(data);
+    },
+    sendData(data) {
       this.$store
         .dispatch("event/addEvent", {
           payload: data,
@@ -202,7 +214,7 @@ export default {
     return {
       formData: {
         name: { required },
-        date: { required },
+        full_date: { required },
         type_time: { required },
         schedule: { required },
       },
