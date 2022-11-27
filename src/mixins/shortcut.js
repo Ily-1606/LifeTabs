@@ -20,5 +20,10 @@ export default {
         name: "event",
       });
     },
+    toFocus() {
+      this.$router.push({
+        name: "focus",
+      });
+    },
   },
 };

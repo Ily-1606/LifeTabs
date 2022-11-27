@@ -3,6 +3,7 @@ const HomeView = import("../views/HomeView.vue");
 const WeatherView = import("../views/WeatherView.vue");
 const ShortcutView = import("../views/ShortcutView.vue");
 const EventView = import("../views/EventView.vue");
+const FocusView = import("../views/FocusView.vue");
 
 import { onlyGuest, onlyUser } from "~/middleware/auth/checkUser";
 
@@ -86,6 +87,23 @@ const routes = [
     meta: {
       layout: "user",
       active: "event",
+    },
+  },
+  {
+    path: "/focus",
+    name: "focus",
+    component: () => FocusView,
+    beforeEnter: function (to, from, next) {
+      const middlewares = [
+        onlyUser.bind(null, () => {
+          return next({ name: "welcome" });
+        }),
+      ];
+      handlerMiddlewares(middlewares, next);
+    },
+    meta: {
+      layout: "user",
+      active: "focus",
     },
   },
   {

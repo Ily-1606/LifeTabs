@@ -37,6 +37,12 @@ const shortCutStore = {
           routerName: "shortcut",
         },
         {
+          name: "taskbar.icons.focus",
+          action: "toFocus",
+          icon: "fa-light fa-lightbulb",
+          routerName: "focus",
+        },
+        {
           name: "taskbar.icons.setting",
           action: "toSetting",
           icon: "fa-light fa-gear",
