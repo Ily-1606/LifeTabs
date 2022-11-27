@@ -8,7 +8,7 @@
     >
       <div class="flex-auto">
         <input
-          class="border-none outline-none w-full py-2 placeholder:text-blue-500"
+          class="border-none bg-transparent outline-none w-full py-2 placeholder:text-blue-500"
           v-model="q"
           placeholder="Tìm kiếm..."
         />

@@ -1,10 +1,6 @@
 <template>
-  <div class="flex flex-wrap">
-    <div
-      v-for="(video, index) in videos"
-      :key="index"
-      class="flex-none w-1/3 md:w-1/2"
-    >
+  <div class="grid grid-cols-3 md:grid-cols-2 gap-3">
+    <div v-for="(video, index) in videos" :key="index" class="">
       <ItemVideoYTVue :data="video" />
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded-lg">
+  <div class="p-4 u-panel rounded-lg">
     <img class="w-full rounded-lg" :src="data.thumbnail" />
     <div class="mt-2">
       {{ data.name }}
