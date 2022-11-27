@@ -2,7 +2,7 @@
   <div class="space-y-8">
     <div class="" v-for="(groupMail, email) in listMailGroup" :key="email">
       <div class="mb-4">{{ email }}</div>
-      <div class="space-y-2 bg-white p-4 rounded-xl">
+      <div class="space-y-2 u-panel p-4 rounded-xl">
         <MailRow v-for="(mail, index) in groupMail" :key="index" :data="mail" />
       </div>
     </div>
