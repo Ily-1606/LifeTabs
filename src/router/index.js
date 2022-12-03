@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 const HomeView = import("../views/HomeView.vue");
 const WeatherView = import("../views/WeatherView.vue");
+const FocusGettingStartedView = import("../views/Focus/GettingStartedView.vue");
+const FocusHome = import("../views/Focus/FocusView.vue");
 const ShortcutView = import("../views/ShortcutView.vue");
 const EventView = import("../views/EventView.vue");
-const FocusView = import("../views/FocusView.vue");
 
 import { onlyGuest, onlyUser } from "~/middleware/auth/checkUser";
 
@@ -92,7 +93,18 @@ const routes = [
   {
     path: "/focus",
     name: "focus",
-    component: () => FocusView,
+    children: [
+      {
+        name: "focusHome",
+        path: "",
+        component: () => FocusHome,
+      },
+      {
+        name: "focusGettingStarted",
+        path: "getting-started",
+        component: () => FocusGettingStartedView,
+      },
+    ],
     beforeEnter: function (to, from, next) {
       const middlewares = [
         onlyUser.bind(null, () => {
@@ -102,7 +114,7 @@ const routes = [
       handlerMiddlewares(middlewares, next);
     },
     meta: {
-      layout: "user",
+      layout: "focus",
       active: "focus",
     },
   },
