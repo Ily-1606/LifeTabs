@@ -47,6 +47,11 @@ import {
   faTrash,
   faThumbtack,
   faLightbulb,
+  faChartWaterfall,
+  faRibbon,
+  faTree,
+  faUser,
+  faBars,
 } from "@ily1606/pro-light-svg-fontawesome";
 const icons = {
   faCircleExclamation,
@@ -92,6 +97,11 @@ const icons = {
   faCaretDown,
   faThumbtack,
   faLightbulb,
+  faChartWaterfall,
+  faRibbon,
+  faTree,
+  faUser,
+  faBars,
 };
 const setup = (app) => {
   app.use(Config, icons);

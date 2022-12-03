@@ -22,7 +22,7 @@ export default {
     },
     toFocus() {
       this.$router.push({
-        name: "focus",
+        name: "focusHome",
       });
     },
   },

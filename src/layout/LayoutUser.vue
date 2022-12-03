@@ -9,12 +9,12 @@
 </template>
 <script setup>
 import HomeTaskbar from "~/components/Toolbars/HomeTaskbar.vue";
-import NightClear from "~/components/Theme/Weather/NightClear.vue";
+// import NightClear from "~/components/Theme/Weather/NightClear.vue";
 import { ref } from "@vue/reactivity";
-const now = new Date();
 const component = ref("div");
-if (now.getHours() >= 17) {
-  document.body.classList.add("dark");
-  component.value = NightClear;
-}
+// const now = new Date();
+// if (now.getHours() >= 17) {
+//   document.body.classList.add("dark");
+//   component.value = NightClear;
+// }
 </script>
