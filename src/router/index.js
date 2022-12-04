@@ -3,6 +3,7 @@ const HomeView = import("../views/HomeView.vue");
 const WeatherView = import("../views/WeatherView.vue");
 const FocusGettingStartedView = import("../views/Focus/GettingStartedView.vue");
 const FocusHome = import("../views/Focus/FocusView.vue");
+const MissionFullScreen = import("../views/Focus/MissionFullScreen.vue");
 const ShortcutView = import("../views/ShortcutView.vue");
 const EventView = import("../views/EventView.vue");
 
@@ -100,9 +101,38 @@ const routes = [
         component: () => FocusHome,
       },
       {
+        name: "missionFullScreen",
+        path: "full-screen",
+        component: () => MissionFullScreen,
+        meta: {
+          layout: "focusFullScreen",
+          active: "focus",
+        },
+      },
+      {
         name: "focusGettingStarted",
         path: "getting-started",
         component: () => FocusGettingStartedView,
+      },
+      {
+        name: "focusAnalyze",
+        path: "analyze",
+        component: () => FocusHome,
+      },
+      {
+        name: "focusRibbon",
+        path: "ribbon",
+        component: () => FocusHome,
+      },
+      {
+        name: "focusTree",
+        path: "tree",
+        component: () => FocusHome,
+      },
+      {
+        name: "focusSetting",
+        path: "setting",
+        component: () => FocusHome,
       },
     ],
     beforeEnter: function (to, from, next) {
