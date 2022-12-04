@@ -52,6 +52,9 @@ import {
   faTree,
   faUser,
   faBars,
+  faPlay,
+  faPause,
+  faStop,
 } from "@ily1606/pro-light-svg-fontawesome";
 const icons = {
   faCircleExclamation,
@@ -102,6 +105,9 @@ const icons = {
   faTree,
   faUser,
   faBars,
+  faPlay,
+  faPause,
+  faStop,
 };
 const setup = (app) => {
   app.use(Config, icons);

@@ -34,22 +34,22 @@ const listSidebar = ref([
   },
   {
     text: "Thống kê",
-    routerName: "focusHome",
+    routerName: "focusAnalyze",
     icon: "fa-light fa-calendar",
   },
   {
     text: "Danh hiệu",
-    routerName: "focusHome",
+    routerName: "focusRibbon",
     icon: "fa-light fa-ribbon",
   },
   {
     text: "Cây",
-    routerName: "focusHome",
+    routerName: "focusTree",
     icon: "fa-light fa-tree",
   },
   {
     text: "Cài đặt",
-    routerName: "focusHome",
+    routerName: "focusSetting",
     icon: "fa-light fa-gear",
   },
 ]);
