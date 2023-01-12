@@ -1,5 +1,5 @@
 // Init extension load env.json
-const ENV_FILE = ".env.local";
+const ENV_FILE = "/.env.local.json";
 let ENV;
 fetch(ENV_FILE)
   .then((res) => {
@@ -13,7 +13,7 @@ chrome.action.onClicked.addListener(() => {
   chrome.tabs.create({ url: "/index.html" });
 });
 
-chrome.storage.sync.get(["userId"]).then(({ userId }) => {
+chrome.storage.local.get(["userId"]).then(({ userId }) => {
   if (!userId) {
     chrome.tabs.create({
       url: "/index.html#/welcome",

@@ -3,7 +3,13 @@
  */
 
 chrome?.storage?.local.get(["userToken"]).then(({ userToken }) => {
-  localStorage.setItem("userToken", userToken);
+  if (userToken)
+    localStorage.setItem(
+      "userToken",
+      JSON.stringify({
+        value: userToken.value,
+      })
+    );
 });
 
 /**
@@ -11,16 +17,18 @@ chrome?.storage?.local.get(["userToken"]).then(({ userToken }) => {
  */
 chrome?.storage?.onChanged.addListener((changes, areaName) => {
   if (areaName === "local" && changes.userToken) {
-    localStorage.setItem("userToken", changes.userToken);
+    const payload = {
+      value: changes.userToken?.newValue.value,
+    };
+    localStorage.setItem("userToken", JSON.stringify(payload));
   }
 });
 
-const removeStorage = ({ key }) => {
-  if (chrome?.storage) {
-    chrome.storage.local.remove(key);
-    return;
-  }
+const removeStorage = async ({ key }) => {
   localStorage.removeItem(key);
+  if (chrome?.storage) {
+    return chrome.storage.local.remove(key);
+  }
 };
 
 export { removeStorage };

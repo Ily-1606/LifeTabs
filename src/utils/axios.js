@@ -30,8 +30,9 @@ axiosApi.interceptors.response.use(
       if (status === 401) {
         removeStorage({
           key: "userToken",
+        }).then(() => {
+          router.push({ name: "welcome" });
         });
-        router.push({ name: "welcome" });
       }
     } catch (e) {
       // Some thing went wrong

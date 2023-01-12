@@ -17,6 +17,7 @@
             :is="viewPort[step - 1].component"
             :btnText="viewPort[step - 1].btnText"
             @next="viewPort[step - 1].onSubmit"
+            :user-data="userData"
           />
         </transition>
       </div>
@@ -43,6 +44,7 @@ export default {
   },
   data() {
     return {
+      userData: {},
       step: 1,
       totalStep: 4,
       viewPort: [
@@ -79,8 +81,9 @@ export default {
     };
   },
   methods: {
-    next() {
+    next(data) {
       this.step += 1;
+      this.userData = { ...this.userData, ...data };
     },
   },
 };

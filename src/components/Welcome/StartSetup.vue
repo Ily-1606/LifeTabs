@@ -21,6 +21,12 @@
 <script>
 import SetupLottie from "~/assets/lottie/97798-loading.json?url";
 export default {
+  props: {
+    userData: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
       SetupLottie,
@@ -28,7 +34,7 @@ export default {
   },
   methods: {
     async createUser() {
-      const res = await this.$store.dispatch("signup");
+      const res = await this.$store.dispatch("signup", { data: this.userData });
       if (res.success) {
         this.getAccessToken({
           uuid: res.data.user.uuid,

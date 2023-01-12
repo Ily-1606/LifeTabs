@@ -30,7 +30,7 @@ export default createStore({
     },
     getStorage: () => (key) => {
       if (chrome?.storage) {
-        return chrome.storage.local.get([key]);
+        return chrome.storage.local.get([key]).then((data) => data[key]);
       } else {
         return new Promise((solver) => {
           const data = localStorage.getItem(key);
@@ -96,7 +96,7 @@ export default createStore({
     ) {
       return currentTime > markTime + timeOut;
     },
-    async signup(context, data) {
+    async signup(context, { data }) {
       const res = await axiosApi.post("/user/signup", data);
       return res.data;
     },
@@ -130,6 +130,9 @@ export default createStore({
         timeOut: TIME_OUT,
         callback,
       });
+    },
+    async getNotification(context, data) {
+      return await axiosApi.post("/user/subscriber", data);
     },
     async getFromStorage(context, { key, module, timeOut, callback }) {
       let needReload = true;

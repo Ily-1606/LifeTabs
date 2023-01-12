@@ -5,13 +5,13 @@
       :key="sidebar.text"
       :to="{ name: sidebar.routerName }"
       custom
-      v-slot="{ isActive, href, navigate }"
+      v-slot="{ href, navigate, isExactActive }"
     >
       <a
         :href="href"
         @click="navigate"
         class="py-3 px-4 font-medium flex gap-x-3 items-center rounded-lg"
-        :class="{ 'bg-lime-600 text-slate-100 fill-slate-100': isActive }"
+        :class="{ 'bg-lime-600 text-slate-100 fill-slate-100': isExactActive }"
       >
         <div class="flex-none">
           <VueFontAwesome :icon="sidebar.icon" class="w-4 h-4 fill-inherit" />
