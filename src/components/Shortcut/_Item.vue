@@ -14,7 +14,7 @@
         </template>
         <template v-else>
           <img
-            :src="`${BASE_STORAGE_URL}/${props.data.imageUrl}`"
+            :src="`${BASE_STORAGE_URL_FAVICON}/${props.data.imageUrl}`"
             class="w-6 h-6 rounded-lg mx-auto"
           />
         </template>
@@ -90,7 +90,9 @@ const router = useRouter();
 const routerBinding = {
   $router: router,
 };
-const BASE_STORAGE_URL = ref(import.meta.env.VITE_APP_BASE_STORAGE);
+const BASE_STORAGE_URL_FAVICON = ref(
+  import.meta.env.VITE_APP_BASE_STORAGE_FAVICON
+);
 const props = defineProps({
   data: {
     type: Object,

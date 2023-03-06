@@ -26,7 +26,7 @@
         <div
           v-else
           :style="{
-            backgroundImage: `url(${BASE_STORAGE_URL}/${shortcut.imageUrl})`,
+            backgroundImage: `url(${BASE_STORAGE_URL_FAVICON}/${shortcut.imageUrl})`,
           }"
           class="w-6 h-6 rounded-lg mx-auto bg-contain bg-center"
         />
@@ -70,11 +70,13 @@
 </template>
 <script>
 import shortcutMixin from "~/mixins/shortcut";
+import { useToast } from "~/utils/toastification";
 export default {
   mixins: [shortcutMixin],
   data() {
     return {
-      BASE_STORAGE_URL: import.meta.env.VITE_APP_BASE_STORAGE,
+      BASE_STORAGE_URL_FAVICON: import.meta.env.VITE_APP_BASE_STORAGE_FAVICON,
+      toast: useToast(),
     };
   },
   computed: {
@@ -119,6 +121,7 @@ export default {
           },
         })
         .then(() => {
+          this.toast.success("Bỏ pin lối tắt thành công");
           this.$store.dispatch("shortcut/getShortcut");
         });
     },

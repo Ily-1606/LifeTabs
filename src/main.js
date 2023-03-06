@@ -22,6 +22,7 @@ const handlers = Promise.all([
   import("./plugins/lodash"),
   import("v-calendar"),
   // import("./locales/locales"),
+  import("./utils/toastification"),
 ]);
 handlers.then(
   ([
@@ -33,6 +34,7 @@ handlers.then(
     lodash,
     VCalendar,
     // locales,
+    toastification,
   ]) => {
     app
       .use(store.default)
@@ -41,6 +43,7 @@ handlers.then(
       .use(moment.default)
       .use(VCalendar.default, {})
       // .use(locales.setupI18n())
+      .use(toastification.Toast, toastification.options)
       .use(lodash.default);
     fontawesome.setup(app);
     app.mount("#app");
