@@ -73,7 +73,11 @@ export default {
       if (!result) {
         return;
       }
-      this.$emit("next");
+      this.$emit("next", {
+        email: this.email,
+        password: this.password,
+        rePassword: this.rePassword,
+      });
     },
   },
   validations() {

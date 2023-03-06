@@ -64,6 +64,7 @@
 import { ref, computed } from "@vue/reactivity";
 import { watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { useToast } from "~/utils/toastification";
 import Item from "~/components/Shortcut/_Item.vue";
 import ModalAddShortcut from "~/components/Modal/ModalAddShortcut.vue";
 import ModalEditShortcut from "~/components/Modal/ModalEditShortcut.vue";
@@ -71,6 +72,7 @@ import ModalDeleteShortcut from "~/components/Modal/ModalDeleteShortcut.vue";
 import RainDrop from "~/components/Other/RainDrop.vue";
 
 const store = useStore();
+const toast = useToast();
 const search = () => {};
 const q = ref("");
 const Q = ref();
@@ -133,6 +135,7 @@ const handlePinShortcut = (shortcutData) => {
       },
     })
     .then(() => {
+      toast.success("Pin lối tắt thành công!");
       store.dispatch("shortcut/getShortcut");
     });
 };

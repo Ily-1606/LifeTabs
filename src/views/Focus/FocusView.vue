@@ -24,9 +24,17 @@
             nào.
           </div>
           <div class="flex justify-center">
-            <button class="btn-green py-3 px-8 rounded-full bg-lime-700">
-              Bắt đầu
-            </button>
+            <router-link
+              :to="{ name: 'missionFullScreen' }"
+              v-slot="{ navigate }"
+            >
+              <button
+                class="btn-green py-3 px-8 rounded-full bg-lime-700"
+                @click="navigate"
+              >
+                Bắt đầu
+              </button>
+            </router-link>
           </div>
         </div>
       </div>
