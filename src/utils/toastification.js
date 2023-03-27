@@ -22,4 +22,18 @@ const options = {
   newestOnTop: true,
 };
 
-export { Toast, options, useToast };
+/**
+ * handleException from http client
+ * @param {AxiosError}
+ * @readonly
+ */
+const handleHTTPException = (axiosError) => {
+  const toast = useToast();
+  if (!axiosError?.response?.data.success) {
+    toast.error(axiosError.response.data.errors);
+    return;
+  }
+  toast.error("Có lỗi khi thực hiện hành động này");
+};
+
+export { Toast, options, useToast, handleHTTPException };

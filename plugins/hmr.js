@@ -7,10 +7,6 @@ export default function CustomHmr(config) {
     apply: "build",
     // HMR
     async buildStart() {
-      const files = await fg("public/**/*");
-      for (let file of files) {
-        this.addWatchFile(file);
-      }
       const envs = await fg("./.env.*");
       for (let file of envs) {
         /**
@@ -23,6 +19,11 @@ export default function CustomHmr(config) {
          */
         this.addWatchFile(file);
       }
+      this.emitFile({
+        type: "chunk",
+        id: "public/js/background.js",
+        fileName: "js/background.js",
+      });
     },
   };
 }

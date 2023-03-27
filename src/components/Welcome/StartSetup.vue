@@ -33,6 +33,18 @@ export default {
     };
   },
   methods: {
+    async setupData(token) {
+      this.$store.commit("set", {
+        key: "userToken",
+        value: token,
+        setStorage: true,
+      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "home",
+        });
+      }, 5000);
+    },
     async createUser() {
       const res = await this.$store.dispatch("signup", { data: this.userData });
       if (res.success) {
@@ -41,21 +53,16 @@ export default {
         }).then((res) => {
           const token = res.data.token;
           if (token) {
-            this.$store.commit("set", {
-              key: "userToken",
-              value: token,
-              setStorage: true,
-            });
-            setTimeout(() => {
-              this.$router.push({
-                name: "home",
-              });
-            }, 5000);
+            return this.setupData(token);
           }
         });
       }
     },
     async initData() {
+      if (this.userData.token) {
+        await this.setupData(this.userData.token);
+        return;
+      }
       await this.createUser();
     },
     async getAccessToken(data) {

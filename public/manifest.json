@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LifeTab",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Make your life's is simple!",
   "icons": {
     "16": "/assets/icons/UKN.png",
@@ -11,10 +11,12 @@
   "permissions": [
     "tabs",
     "storage",
-    "geolocation"
+    "geolocation",
+    "alarms"
   ],
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "js/background.js",
+    "type": "module"
   },
   "action": {
     "default_icon": {

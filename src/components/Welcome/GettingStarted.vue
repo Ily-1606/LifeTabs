@@ -15,7 +15,8 @@
         Cảm ơn bạn đã sử dụng tiện ích mở rộng, sau đây chúng tôi có một số
         hướng dẫn cho bạn.
       </div>
-      <div class="flex justify-center items-center mt-4">
+      <div class="flex justify-between items-center mt-8">
+        <button class="btn-blue" @click="$emit('back')">{{ btnBack }}</button>
         <button class="btn-green" @click="$emit('next')">{{ btnText }}</button>
       </div>
     </div>
@@ -26,6 +27,10 @@ import lottieWelcome from "~/assets/lottie/122990-smile-circle.json?url";
 export default {
   props: {
     btnText: {
+      type: String,
+      required: true,
+    },
+    btnBack: {
       type: String,
       required: true,
     },
